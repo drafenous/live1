@@ -1,0 +1,67 @@
+$theme-colors: (
+  primary: #f38630,
+  secondary: #4f8699,
+  success: #4f8699,
+  danger: #c0392b,
+  info: #2980b9,
+  warning: #f38630,
+  light: #ecf0f1,
+  dark: #2c3e50
+);
+
+$enable-rounded: false;
+$border-radius: 0px;
+$border-radius-base: 0px;
+$border-radius-large: 0px;
+$border-radius-small: 0px;
+@border-radius-base:        0px;
+@border-radius-large:       0px;
+@border-radius-small:       0px;
+
+// functions
+@function theme-color($key) {
+    @return map-get($theme-colors, $key);
+}
+
+// custom elements
+.dataTable thead{
+    background-color: theme-color("secondary");
+    color: #ffffff;
+    text-align: center;
+}
+
+// buttons
+.btn-primary{
+    color: #ffffff !important;
+}
+
+.input-group-text{
+    background-color: theme-color("secondary") !important;
+    color: #ffffff !important;
+    border-radius: 0px !important;
+}
+
+.custom-file-label{
+    border-radius: 0px !important;
+}
+
+.pagination>li:first-child>a, .pagination>li:first-child>span {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.card{
+    border-radius: $border-radius-base;
+}
+
+$custom-file-text: (
+  en: "Browse",
+  pt-BR: "Selecionar"
+);
+
+@import "node_modules/bootstrap/scss/bootstrap";
