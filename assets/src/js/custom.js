@@ -36,12 +36,62 @@ $(document).ready(function(event){
     bsCustomFileInput.init()
 
     // DateTime Picker
-    $('#dtpMY').datetimepicker({
+    var today = new Date();
+    var month = ("0" + (today.getMonth() + 1)).slice(-2)
+    var year = today.getFullYear();
+    var day = today.getDay();
+    var startDate = new Date(month + '/01/' + year);
+    var endDate = new Date(month + '/' + day + '/' + year);
+
+    $('#inputDe').datetimepicker({
         locale: 'pt-BR',
-        viewMode: 'years',
+        viewMode: 'days',
+        format: 'DD/MM/YYYY',
+        defaultDate: moment(startDate),
+        icons: {
+            time: 'far fa-clock',
+            date: 'far fa-calendar',
+            up: 'far fa-arrow-up',
+            down: 'far fa-arrow-down',
+            previous: 'fas fa-chevron-left',
+            next: 'fas fa-chevron-right',
+            today: 'far fa-calendar-check-o',
+            clear: 'far fa-trash',
+            close: 'far fa-times'
+        }
+    });
+
+    $('#inputAte').datetimepicker({
+        locale: 'pt-BR',
+        viewMode: 'days',
+        format: 'DD/MM/YYYY',
+        defaultDate: moment(endDate),
+        icons: {
+            time: 'far fa-clock',
+            date: 'far fa-calendar',
+            up: 'far fa-arrow-up',
+            down: 'far fa-arrow-down',
+            previous: 'fas fa-chevron-left',
+            next: 'fas fa-chevron-right',
+            today: 'far fa-calendar-check-o',
+            clear: 'far fa-trash',
+            close: 'far fa-times'
+        }
+    });
+
+    $("#inputDe").on("change.datetimepicker", function (e) {
+        $('#inputAte').datetimepicker('minDate', e.date);
+    });
+
+    $("#inputAte").on("change.datetimepicker", function (e) {
+        $('#inputDe').datetimepicker('maxDate', e.date);
+    });
+
+    $('#inputMA').datetimepicker({
+        locale: 'pt-BR',
+        viewMode: 'months',
         format: 'MM/YYYY',
-        useCurrent: true,
-        defaultDate: moment(),
+        defaultDate: moment(today),
         icons: {
             time: 'far fa-clock',
             date: 'far fa-calendar',
@@ -62,7 +112,16 @@ $.extend($.fn.dataTable.defaults, {
         "<'row'<'col-sm-12'r>>" +
         "<'row'<'col-sm-12'tr>>" +
         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-    buttons: ['excelHtml5', 'pdfHtml5', 'pageLength'],
+    buttons: [
+        {extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> Excel'},
+        {extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> PDF'},
+        {extend: 'pageLength'},
+        {text: '<i class="fas fa-sync-alt"></i> Recarregar',
+            action: function(e, dt, node, config){
+            dt.ajax.reload(null, false);
+        }, 
+        attr: {class: 'btn btn-primary dtUpdateButton'}
+    }],
     lengthMenu: [
         [10, 25, 50, -1],
         ['Exibir 10 elementos', 'Exibir 25 elementos', 'Exibir 50 elementos', 'Exibir todos os elementos']
@@ -88,8 +147,8 @@ $.extend($.fn.dataTable.defaults, {
         },
         buttons: {
             pageLength: {
-                _: "Exibindo %d elementos",
-                '-1': "Exibindo todos os elementos"
+                _: "<i class='fas fa-table'></i> Exibindo %d elementos",
+                '-1': "<i class='fas fa-table'></i> Exibindo todos os elementos"
             }
         },
         oAria: {

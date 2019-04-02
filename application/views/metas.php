@@ -6,6 +6,7 @@
     <form id="frmMetas" enctype="multipart/form-data">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-9">
+                <label for="upload-file">Enviar novas metas</label>
                 <div class="input-group">
                     <div class="custom-file col-md-4">
                         <input type="file" class="custom-file-input" id="upload-file"
@@ -22,10 +23,11 @@
             </div>
 
             <div class="col-12 col-sm-12 col-md-3">
+                <label for="inputMA" data-target="#inputMA" data-toggle="datetimepicker">Selecionar o mês</label>
                 <div class="form-group">
-                    <div class="input-group date" id="dtpMY" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#dtpMY" />
-                        <div class="input-group-append" data-target="#dtpMY" data-toggle="datetimepicker">
+                    <div class="input-group date" id="inputMA" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" name="dtpMY" data-target="#inputMA" />
+                        <div class="input-group-append" data-target="#inputMA" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
