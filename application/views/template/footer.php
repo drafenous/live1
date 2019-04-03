@@ -38,6 +38,7 @@
 <script src="<?= base_url('node_modules\datatables.net-scroller-bs4\js\scroller.bootstrap4.min.js'); ?>"></script>
 <script src="<?= base_url('node_modules\datatables.net-select-bs4\js\select.bootstrap4.min.js'); ?>"></script>
 <script src="<?= base_url('assets\src\js\Datatables Plugins\dataTables.sum.js'); ?>"></script>
+<script src="<?= base_url('assets\src\js\Datatables Plugins\dataTables.moment.js'); ?>"></script>
 
 <script src="<?= base_url('node_modules\jquery-mask-plugin\dist\jquery.mask.min.js'); ?>"></script>
 <script src="<?= base_url('node_modules\jszip\dist\jszip.min.js'); ?>"></script>

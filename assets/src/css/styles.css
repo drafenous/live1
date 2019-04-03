@@ -237,6 +237,10 @@
     margin: 0px 0px 25px 0px;
 }
 
+table.dataTable tbody td {
+    vertical-align: middle;
+}
+
 /* footer */
 
 .footer {

@@ -9,15 +9,12 @@
                 <label for="upload-file">Enviar novas metas</label>
                 <div class="input-group">
                     <div class="custom-file col-md-4">
-                        <input type="file" class="custom-file-input" id="upload-file"
-                            aria-describedby="inputGroupFileAddon">
+                        <input type="file" class="custom-file-input" id="upload-file" aria-describedby="inputGroupFileAddon">
                         <label class="custom-file-label" for="upload-file">Escolher Arquivo</label>
                     </div>
                     <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button" id="inputGroupFileAddon">Enviar Arquivo <i
-                                class="fas fa-upload"></i></button>
-                        <button class="btn btn-primary" type="button" id="inputGroupFileAddon">Exemplo de Arquivo <i
-                                class="fas fa-download"></i></button>
+                        <button class="btn btn-secondary" type="button" id="inputGroupFileAddon">Enviar Arquivo <i class="fas fa-upload"></i></button>
+                        <button class="btn btn-primary" type="button" id="inputGroupFileAddon">Exemplo de Arquivo <i class="fas fa-download"></i></button>
                     </div>
                 </div>
             </div>
@@ -69,24 +66,30 @@
             </tr>
         </thead>
         <tbody>
-            <?php for($i = 0; $i <= 100; $i++){ ?>
-            <tr>
-                <td>Rodrigo</td>
-                <td>7001</td>
-                <td>SP</td>
-                <td>R$ <span class="money">1000<span></td>
-                <td>R$ <span class="money">1000<span></td>
-                <td>Com Sono</td>
-            </tr>
-            <?php } ?>
         </tbody>
     </table>
 </main>
 
 <script>
-    $(document).ready(function (event) {
+    $(document).ready(function(event) {
         table = $('#dtMetas').DataTable({
-            drawCallback: function () {
+            ajax: {
+                url: "<?= base_url('assets/src/json/metas.json'); ?>",
+                dataType: 'JSON',
+                dataSrc: 'metas',
+                error: (response) => {
+                    console.error(response);
+                }
+            },
+            columns: [
+                {data: "nome"},
+                {data: "ramal"},
+                {data: "tipo"},
+                {data: "metaFaturamento", class: "money"},
+                {data: "sugestao", class: "money"},
+                {data: "status"}
+            ],
+            drawCallback: function() {
                 // calcs
                 var api = this.api();
                 var sum = api.column(3).data().sum();
@@ -95,8 +98,14 @@
                 // display results
                 $('#metasTotal').html(count);
                 $('#valorTotal').html(`R$ <span class="money">${sum}</span>`);
-                $('.money').mask("#.##0,00", { reverse: true }).trigger('keyup');
+
+                $('#dtMetas th').removeClass('money');
+                $('.money').mask("#.##0,00", {
+                    reverse: true
+                }).trigger('keyup');
+
+                $('.dtUpdateButton').attr('disabled', false);
             }
         });
     })
-</script>
+</script> 

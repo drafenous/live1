@@ -120,13 +120,12 @@ $.extend($.fn.dataTable.defaults, {
             action: function(e, dt, node, config){
             dt.ajax.reload(null, false);
         }, 
-        attr: {class: 'btn btn-primary dtUpdateButton'}
+        attr: {class: 'btn btn-primary dtUpdateButton', disabled: true}
     }],
     lengthMenu: [
         [10, 25, 50, -1],
         ['Exibir 10 elementos', 'Exibir 25 elementos', 'Exibir 50 elementos', 'Exibir todos os elementos']
     ],
-    responsive: true,
     language: {
         sEmptyTable: "Nenhum registro encontrado",
         sInfo: "Mostrando de _START_ até _END_ de _TOTAL_ registros",

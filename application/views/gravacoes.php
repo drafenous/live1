@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="inputDe">Data Inicial</label>
+                    <label for="inpuDe">Data Inicial</label>
                     <div class="input-group date dtpDMY" id="inputDe" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#inputDe" />
                         <div class="input-group-append" data-target="#inputDe" data-toggle="datetimepicker">
@@ -32,7 +32,7 @@
 
             <div class="col-md-2">
                 <div class="form-group">
-                    <label for="inputAte">Tipo de Ligação</label>
+                    <label for="tipoChamada">Tipo de Ligação</label>
                     <div class="input-group" data-target-input="nearest">
                         <select class="form-control" id="tipoChamada" name="tipoChamada" data-target="#tipoChamada">
                             <option value="all" selected>Todos</option>
@@ -87,10 +87,12 @@
 
             <div class="col-md-2">
                 <label for="search">&nbsp;</label>
-                <button type="submit" id="search" class="btn btn-success" style="width: 100%"><i class="fas fa-search"></i> Buscar</button>
+                <button type="submit" id="search" class="btn btn-success" style="width: 100%"><i class="fas fa-search" disabled></i> Buscar</button>
             </div>
         </div>
     </form>
+
+    <hr>
 
     <div id="dtEntranteLoading" class="alert alert-success">
         <i class="fas fa-spinner fa-pulse"></i> <strong>Aguarde!</strong> Carregando os dados solicitados.
@@ -104,15 +106,14 @@
             <table id="dtEntrante" class="table display table-hover table-striped">
                 <thead>
                     <tr>
-                        <td>Nome</td>
-                        <td>Ramal</td>
-                        <td>Data</td>
-                        <td>Hora</td>
-                        <td>Cod. Cliente</td>
-                        <td>Origem</td>
-                        <td>Destino</td>
-                        <td>Tempo</td>
-                        <td>Audio</td>
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Cod. Cliente</th>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Tempo</th>
+                        <th>Audio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,31 +135,17 @@
             <table id="dtSainte" class="table display table-hover table-striped">
                 <thead>
                     <tr>
-                        <td>Nome</td>
-                        <td>Ramal</td>
-                        <td class="date">Data</td>
-                        <td class="time">Hora</td>
-                        <td>Cod. Cliente</td>
-                        <td class="phone">Origem</td>
-                        <td>Destino</td>
-                        <td>Tempo</td>
-                        <td>Audio</td>
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>Cod. Cliente</th>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Tempo</th>
+                        <th>Audio</th>
                     </tr>
                 </thead>
                 <tbody>
-                <?php for($i = 0; $i <= 100; $i++){ ?>
-                    <tr>
-                        <td>Rodrigo</td>
-                        <td>7001</td>
-                        <td class="date">2019-04-02 </td>
-                        <td class="time">08:40:00</td>
-                        <td>00001</td>
-                        <td>7001</td>
-                        <td class="phone">11971919512</td>
-                        <td>10:00</td>
-                        <td>02</td>
-                    </tr>
-                <?php } ?>
                 </tbody>
             </table>
         </div>
@@ -166,7 +153,7 @@
 </main>
 
 <script>
-$(document).ready(function(event){
+$(document).ready(function(e){
     dtEntante = $('#dtEntrante').DataTable({
         ajax: {
             url: "<?= base_url('assets/src/json/gravacoes-entrantes.json'); ?>",
@@ -178,24 +165,23 @@ $(document).ready(function(event){
         },
         columns: [
             {data: 'nome'},
-            {data: 'ramal'},
-            {data: 'data'},
-            {data: 'hora'},
+            {data: 'data', className: 'date', render: $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY')},
+            {data: 'hora', className: 'time'},
             {data: 'codCliente'},
-            {data: 'origem'},
+            {data: 'origem', className: 'phone'},
             {data: 'destino'},
             {data: 'tempo'},
-            {data: 'id'}
+            {data: 'id', render: function(data){ return `<audio controls><source type="audio/x-wav"></audio>`}}
         ],
-        preDrawCallback: function(dt){
-            $('.dtUpdateButton, #search').attr('disabled', true);
-            $('#dtEntranteLoading').show();
-        },
-        drawCallback: function(){
+        drawCallback: function(settings){
             $('.dtUpdateButton, #search').attr('disabled', false);
             $('#dtEntranteLoading').hide();
+            // masks
+            $('#dtEntrante th').removeClass('phone');
+            $('#dtEntrante').find('.phone').mask(SPMaskBehavior, spOptions).trigger('keyup');
         }
     });
+
     dtSainte = $('#dtSainte').DataTable({
         ajax: {
             url: "<?= base_url('assets/src/json/gravacoes-entrantes.json'); ?>",
@@ -207,22 +193,20 @@ $(document).ready(function(event){
         },
         columns: [
             {data: 'nome'},
-            {data: 'ramal'},
-            {data: 'data'},
-            {data: 'hora'},
+            {data: 'data', className: 'date', render: $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY')},
+            {data: 'hora', className: 'time'},
             {data: 'codCliente'},
             {data: 'destino'},
-            {data: 'origem'},
+            {data: 'origem', className: 'phone'},
             {data: 'tempo'},
-            {data: 'id'}
+            {data: 'id', render: function(data){ return `<audio controls><source type="audio/x-wav"></audio>`}}
         ],
-        preDrawCallback: function(){
-            $('.dtUpdateButton, #search').attr('disabled', true);
-            $('#dtSainteLoading').show();
-        },
-        drawCallback: function(){
+        drawCallback: function(settings){
             $('.dtUpdateButton, #search').attr('disabled', false);
             $('#dtSainteLoading').hide();
+            // masks
+            $('#dtSainte th').removeClass('phone');
+            $('#dtSainte').find('.phone').mask(SPMaskBehavior, spOptions).trigger('keyup');
         }
     });
 
@@ -230,17 +214,25 @@ $(document).ready(function(event){
         event.preventDefault();
         var form = $(this).serializeArray();
         switch($('#tipoChamada').val()){
-            case 'all':
+        case 'all':
+            $('.dtUpdateButton, #search').attr('disabled', true);
+            $('#dtEntranteLoading, #dtSainteLoading').show();
             dtEntante.ajax.reload(null, false);
             dtSainte.ajax.reload(null, false);
         break;
         case 'entrantes':
+            $('.dtUpdateButton, #search').attr('disabled', true);
+            $('#dtEntranteLoading').show();
             dtEntante.ajax.reload(null, false);
         break;
         case 'saintes':
+            $('.dtUpdateButton, #search').attr('disabled', true);
+            $('#dtSainteLoading').show();
             dtSainte.ajax.reload(null, false);
         break;
         default:
+            $('.dtUpdateButton, #search').attr('disabled', true);
+            $('#dtEntranteLoading, #dtSainteLoading').show();
             dtEntante.ajax.reload(null, false);
             dtSainte.ajax.reload(null, false);
         break;
