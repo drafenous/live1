@@ -94,7 +94,7 @@
 
     <hr>
 
-    <div id="dtEntranteLoading" class="alert alert-success">
+    <div id="dtEntranteLoading" class="alert alert-success" role="alert">
         <i class="fas fa-spinner fa-pulse"></i> <strong>Aguarde!</strong> Carregando os dados solicitados.
     </div>
 
@@ -123,7 +123,7 @@
 
         <div class="col-md-12">
             <hr>
-            <div id="dtSainteLoading" class="alert alert-success">
+            <div id="dtSainteLoading" class="alert alert-success" role="alert">
                 <i class="fas fa-spinner fa-pulse"></i> <strong>Aguarde!</strong> Carregando os dados solicitados.
             </div>
         </div>
@@ -165,13 +165,13 @@ $(document).ready(function(e){
         },
         columns: [
             {data: 'nome'},
-            {data: 'data', className: 'date', render: $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY')},
+            {data: 'data', className: 'date', render: (data, type, row) => { return type === 'export' ? data : $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY') }},
             {data: 'hora', className: 'time'},
             {data: 'codCliente'},
             {data: 'origem', className: 'phone'},
             {data: 'destino'},
             {data: 'tempo'},
-            {data: 'id', render: function(data){ return `<audio controls><source type="audio/x-wav"></audio>`}}
+            {data: 'id', render: function(data, type, row){ return type === 'export' ? 'Arquivo de áudio' : `<audio controls><source type="audio/x-wav"></audio>`}}
         ],
         drawCallback: function(settings){
             $('.dtUpdateButton, #search').attr('disabled', false);
@@ -193,13 +193,13 @@ $(document).ready(function(e){
         },
         columns: [
             {data: 'nome'},
-            {data: 'data', className: 'date', render: $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY')},
+            {data: 'data', className: 'date', render: (data, type, row) => { return type === 'export' ? data : $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY') }},
             {data: 'hora', className: 'time'},
             {data: 'codCliente'},
             {data: 'destino'},
             {data: 'origem', className: 'phone'},
             {data: 'tempo'},
-            {data: 'id', render: function(data){ return `<audio controls><source type="audio/x-wav"></audio>`}}
+            {data: 'id', render: function(data, type, row){ return type === 'export' ? 'Arquivo de áudio' : `<audio controls><source type="audio/x-wav"></audio>`}}
         ],
         drawCallback: function(settings){
             $('.dtUpdateButton, #search').attr('disabled', false);

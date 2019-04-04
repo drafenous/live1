@@ -33,8 +33,16 @@
         </div>
     </form>
 
+    <div id="tableLoading" class="row">
+        <div class="col-md-12">
+            <div id="alert" class="alert alert-success" role="alert">
+                <i class="fas fa-spinner fa-pulse"></i> <strong>Aguarde!</strong> Carregando os dados solicitados.
+            </div>
+        </div>
+    </div>
+
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card rounded-0" style="background-color: #4f8998">
                 <div class="card-title">Metas Cadastradas</div>
                 <div id="metasTotal" class="card-content text-center" style="font-size: 24px;">
@@ -43,7 +51,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card rounded-0" style="background-color: #f38630">
                 <div class="card-title">Meta de Faturamento</div>
                 <div id="valorTotal" class="card-content text-center" style="font-size: 24px;">
@@ -51,10 +59,19 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="card rounded-0" style="background-color: #bdc3c7">
+                <div class="card-title">Meta de Faturamento Sugerida</div>
+                <div id="sugestaoTotal" class="card-content text-center" style="font-size: 24px;">
+                    Carregando
+                </div>
+            </div>
+        </div>
     </div>
 
     <hr>
-    <table id="dtMetas" class="table display table-hover table-striped">
+    <table id="dtMetas" class="table display table-hover table-striped" style="width: 100%">
         <thead>
             <tr>
                 <th>Nome</th>
@@ -65,14 +82,33 @@
                 <th>Status</th>
             </tr>
         </thead>
-        <tbody>
-        </tbody>
+        <form id="frmMetasInseridas">
+            <tbody>
+            </tbody>
+        </form>
     </table>
 </main>
 
 <script>
+    // globals
+    var statusList;
+
     $(document).ready(function(event) {
+        //load user status
+        $.ajax({
+            url: "<?= base_url('/assets/src/json/metas-userStatus.json') ?>",
+            dataType: 'json',
+            success: (response) => {
+                statusList = response.statusList;
+            },
+            error: (response) => {
+                console.error(response);
+            }
+        })
+
+        // DataTable
         table = $('#dtMetas').DataTable({
+            deferRender: false,
             ajax: {
                 url: "<?= base_url('assets/src/json/metas.json'); ?>",
                 dataType: 'JSON',
@@ -81,31 +117,115 @@
                     console.error(response);
                 }
             },
-            columns: [
-                {data: "nome"},
-                {data: "ramal"},
-                {data: "tipo"},
-                {data: "metaFaturamento", class: "money"},
-                {data: "sugestao", class: "money"},
-                {data: "status"}
+            columns: [{
+                    data: "nome"
+                },
+                {
+                    data: "ramal"
+                },
+                {
+                    data: "tipo"
+                },
+                {
+                    data: "metaFaturamento",
+                    render: (data, type, row) => {
+                        return type === 'export' ? convertToMoney(data) : `<input type="text" class="revenues money form-control" name="meta[]" placeholder="0,00" value="${data}"/>`
+                    }
+                },
+                {
+                    data: "sugestao",
+                    render: (data, type, row) => {
+                        return type === 'export' ? convertToMoney(data) : `<input type="text" class="suggestion money form-control" name="segestao[]" placeholder="0,00" value="${data}" readonly disabled/>`
+                    }
+                },
+                {
+                    data: "status",
+                    render: (data, type, row) => {
+                        return type === 'export' ? userStatusExport(data) : userStatusList(data);
+                    }
+                }
             ],
-            drawCallback: function() {
+            drawCallback: function(settings) {
                 // calcs
                 var api = this.api();
-                var sum = api.column(3).data().sum();
+                var sumFat = api.column(3).data().sum();
+                var sumSuggest = api.column(4).data().sum();
                 var count = api.rows().count();
+                var row = api.row();
 
                 // display results
                 $('#metasTotal').html(count);
-                $('#valorTotal').html(`R$ <span class="money">${sum}</span>`);
+                $('#valorTotal').html(`R$ <span class="money">${sumFat}</span>`);
+                $('#sugestaoTotal').html(`R$ <span class="money">${sumSuggest}</span>`);
 
+                // money format
                 $('#dtMetas th').removeClass('money');
                 $('.money').mask("#.##0,00", {
                     reverse: true
                 }).trigger('keyup');
 
+                // input actions
+                $('.revenues').on('keydown', function() {
+                    $('#saveButton').attr('disabled', false);
+                    $(this).css('border', '2px solid #f39c12');
+                })
+
+                $('.status').on('change', function() {
+                    $('#saveButton').attr('disabled', false);
+                    $(this).css('border', '2px solid #f39c12');
+                })
+
+                // ending
+                $('#tableLoading').hide();
                 $('.dtUpdateButton').attr('disabled', false);
+                $('#saveButton').attr('disabled', true);
             }
         });
+
+        table.button().add(4, {
+            action: function(e, dt, button, config) {
+                $('#frmMetasInseridas').trigger('submit');
+            },
+            text: '<i class="fas fa-save"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">Salvar</span>',
+            attr: {
+                class: 'btn btn-green',
+                id: "saveButton",
+                disabled: true
+            }
+        });
+
+        $('#frmMetasInseridas').submit(function(event) {
+            event.preventDefault();
+            $('#tableLoading').show();
+            table.ajax.reload(null, false);
+            console.log('Saved!')
+        })
     })
+
+    function userStatusList(data) {
+        var html = $(`<select class="status form-control" name="status[]"></select>`);
+        $.each(statusList, (index, item) => {
+            var option = `<option value="${item.id}" ${data == item.id ? 'selected' : ''}>${item.name}</option>`
+            $(html).append(option);
+        })
+        var element = $(html).prop('outerHTML');
+        return element;
+    }
+
+    function userStatusExport(data) {
+        var status;
+        $.each(statusList, (index, item) => {
+            if (item.id == data) {
+                status = item.name;
+            }
+        })
+        return status;
+    }
+
+    function convertToMoney(data) {
+        var tmp = data + '';
+        tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+        if (tmp.length > 6) tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+        return tmp;
+    }
 </script> 

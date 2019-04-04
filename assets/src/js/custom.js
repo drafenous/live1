@@ -108,23 +108,39 @@ $(document).ready(function(event){
 
 // Datatables Default Settings
 $.extend($.fn.dataTable.defaults, {
-    dom:"<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
+    deferRender: true,
+    scrollX: true,
+    scroller: true,
+    dom:"<'row'<'col-12 col-sm-12 col-lg-8 col-md-8 col-xl-8'B><'col-12 col-sm-12 col-lg-4 col-md-4 col-xl-4'f>>" +
         "<'row'<'col-sm-12'r>>" +
         "<'row'<'col-sm-12'tr>>" +
         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     buttons: [
-        {extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> Excel'},
-        {extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> PDF'},
+        {extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">Excel</span>', exportOptions : {
+            format: {
+                body: function ( data, row, column, node ) {
+                //check if type is input using jquery
+                return $(data).is(":input") ? $(data).val() : data; }
+            }, orthogonal: 'export'}
+        },
+        {extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">PDF</span>', exportOptions : {
+            format: {
+                body: function ( data, row, column, node ) {
+                //check if type is input using jquery
+                return $(data).is(":input") ? $(data).val() : data; }
+            }, orthogonal: 'export'}
+        },
         {extend: 'pageLength'},
-        {text: '<i class="fas fa-sync-alt"></i> Recarregar',
+        {text: '<i class="fas fa-sync-alt"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">Recarregar</span>',
             action: function(e, dt, node, config){
+            $('#tableLoading').show();             
             dt.ajax.reload(null, false);
         }, 
         attr: {class: 'btn btn-primary dtUpdateButton', disabled: true}
     }],
     lengthMenu: [
         [10, 25, 50, -1],
-        ['Exibir 10 elementos', 'Exibir 25 elementos', 'Exibir 50 elementos', 'Exibir todos os elementos']
+        ['Exibir 10 linhas', 'Exibir 25 linhas', 'Exibir 50 linhas', 'Exibir todas linhas']
     ],
     language: {
         sEmptyTable: "Nenhum registro encontrado",
@@ -146,13 +162,13 @@ $.extend($.fn.dataTable.defaults, {
         },
         buttons: {
             pageLength: {
-                _: "<i class='fas fa-table'></i> Exibindo %d elementos",
-                '-1': "<i class='fas fa-table'></i> Exibindo todos os elementos"
+                _: "<i class='fas fa-table'></i> <span class='d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex'>Exibindo %d linhas</span>",
+                '-1': "<i class='fas fa-table'></i> <span class='d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex'>Exibindo todas as linhas</span>"
             }
         },
         oAria: {
             sSortAscending: ": Ordenar colunas de forma ascendente",
             sSortDescending: ": Ordenar colunas de forma descendente"
         }
-    },
+    }
 });

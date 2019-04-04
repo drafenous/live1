@@ -1,0 +1,9 @@
+{
+    "statusList": [
+        {"id": 0, "name": "Ativo"},
+        {"id": 1, "name": "Novo"},
+        {"id": 2, "name": "Licença"},
+        {"id": 3, "name": "Férias"},
+        {"id": 4, "name": "Inativo"}
+    ]
+}
