@@ -103,7 +103,7 @@
             <h2>Ligações Entrantes</h2>
         </div>
         <div class="col-md-12">
-            <table id="dtEntrante" class="table display table-hover table-striped">
+            <table id="dtEntrante" class="table display table-hover table-striped" style="width: 100%;">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -132,7 +132,7 @@
             <h2>Ligações Saíntes</h2>
         </div>
         <div class="col-md-12">
-            <table id="dtSainte" class="table display table-hover table-striped">
+            <table id="dtSainte" class="table display table-hover table-striped" style="width: 100%;">
                 <thead>
                     <tr>
                         <th>Nome</th>
@@ -165,13 +165,13 @@ $(document).ready(function(e){
         },
         columns: [
             {data: 'nome'},
-            {data: 'data', className: 'date', render: (data, type, row) => { return type === 'export' ? data : $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY') }},
+            {data: 'data', className: 'date', render: (data, type, row) => { return type === 'export' ? data : moment(data, 'YYYY-MM-DD').format('DD/MM/YYYY') }},
             {data: 'hora', className: 'time'},
             {data: 'codCliente'},
             {data: 'origem', className: 'phone'},
             {data: 'destino'},
             {data: 'tempo'},
-            {data: 'id', render: function(data, type, row){ return type === 'export' ? 'Arquivo de áudio' : `<audio controls><source type="audio/x-wav"></audio>`}}
+            {data: 'id', render: function(data, type, row){ return type === 'export' ? 'Arquivo de áudio' : `<audio controls><source type="audio/x-wav"></audio>`}, orderable: false}
         ],
         drawCallback: function(settings){
             $('.dtUpdateButton, #search').attr('disabled', false);
@@ -193,13 +193,13 @@ $(document).ready(function(e){
         },
         columns: [
             {data: 'nome'},
-            {data: 'data', className: 'date', render: (data, type, row) => { return type === 'export' ? data : $.fn.dataTable.render.moment('YYYY-MM-DD', 'DD/MM/YYYY') }},
+            {data: 'data', className: 'date', render: (data, type, row) => { return type === 'export' ? data : moment(data, 'YYYY-MM-DD').format('DD/MM/YYYY') }},
             {data: 'hora', className: 'time'},
             {data: 'codCliente'},
             {data: 'destino'},
             {data: 'origem', className: 'phone'},
             {data: 'tempo'},
-            {data: 'id', render: function(data, type, row){ return type === 'export' ? 'Arquivo de áudio' : `<audio controls><source type="audio/x-wav"></audio>`}}
+            {data: 'id', render: function(data, type, row){ return type === 'export' ? 'Arquivo de áudio' : `<audio controls><source type="audio/x-wav"></audio>`}, orderable: false}
         ],
         drawCallback: function(settings){
             $('.dtUpdateButton, #search').attr('disabled', false);

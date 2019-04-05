@@ -111,6 +111,7 @@ $.extend($.fn.dataTable.defaults, {
     deferRender: true,
     scrollX: true,
     scroller: true,
+    order: [[ 0, "desc" ]],
     dom:"<'row'<'col-12 col-sm-12 col-lg-8 col-md-8 col-xl-8'B><'col-12 col-sm-12 col-lg-4 col-md-4 col-xl-4'f>>" +
         "<'row'<'col-sm-12'r>>" +
         "<'row'<'col-sm-12'tr>>" +
@@ -172,3 +173,35 @@ $.extend($.fn.dataTable.defaults, {
         }
     }
 });
+
+// Datatables LIVE DOM
+$.fn.dataTable.ext.order['dom-text'] = function  ( settings, col )
+{
+    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+        return $('input', td).val();
+    } );
+}
+ 
+/* Create an array with the values of all the input boxes in a column, parsed as numbers */
+$.fn.dataTable.ext.order['dom-text-numeric'] = function  ( settings, col )
+{
+    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+        return $('input', td).val() * 1;
+    } );
+}
+ 
+/* Create an array with the values of all the select options in a column */
+$.fn.dataTable.ext.order['dom-select'] = function  ( settings, col )
+{
+    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+        return $('select', td).val();
+    } );
+}
+ 
+/* Create an array with the values of all the checkboxes in a column */
+$.fn.dataTable.ext.order['dom-checkbox'] = function  ( settings, col )
+{
+    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+        return $('input', td).prop('checked') ? '1' : '0';
+    } );
+}

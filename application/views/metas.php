@@ -82,10 +82,8 @@
                 <th>Status</th>
             </tr>
         </thead>
-        <form id="frmMetasInseridas">
-            <tbody>
-            </tbody>
-        </form>
+        <tbody>
+        </tbody>
     </table>
 </main>
 
@@ -130,19 +128,24 @@
                     data: "metaFaturamento",
                     render: (data, type, row) => {
                         return type === 'export' ? convertToMoney(data) : `<input type="text" class="revenues money form-control" name="meta[]" placeholder="0,00" value="${data}"/>`
-                    }
+                    },
+                    orderDataType: "dom-text-numeric"
                 },
                 {
                     data: "sugestao",
                     render: (data, type, row) => {
                         return type === 'export' ? convertToMoney(data) : `<input type="text" class="suggestion money form-control" name="segestao[]" placeholder="0,00" value="${data}" readonly disabled/>`
-                    }
+                    },
+                    orderDataType: "dom-text-numeric"
+
                 },
                 {
                     data: "status",
                     render: (data, type, row) => {
                         return type === 'export' ? userStatusExport(data) : userStatusList(data);
-                    }
+                    },
+                    orderDataType: "dom-select"
+
                 }
             ],
             drawCallback: function(settings) {
@@ -184,7 +187,10 @@
 
         table.button().add(4, {
             action: function(e, dt, button, config) {
-                $('#frmMetasInseridas').trigger('submit');
+                var data = dt.$(':input').serializeArray();
+                console.log(data);
+                $('#tableLoading').show();
+                table.ajax.reload(null, false);
             },
             text: '<i class="fas fa-save"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">Salvar</span>',
             attr: {
@@ -193,13 +199,6 @@
                 disabled: true
             }
         });
-
-        $('#frmMetasInseridas').submit(function(event) {
-            event.preventDefault();
-            $('#tableLoading').show();
-            table.ajax.reload(null, false);
-            console.log('Saved!')
-        })
     })
 
     function userStatusList(data) {
