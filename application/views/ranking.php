@@ -187,7 +187,7 @@ $(document).ready(function(event){
 function loadRanking(){
     var rankingList = '';
     $.ajax({
-        url: "<?= base_url('assets/src/json/ranking.json'); ?>",
+        url: "<?= base_url('assets/src/json/ranking.json'); ?>?_=" + (new Date()).getTime(),
         dataType: 'json',
         success: (response) => {
             var sortedRanking = response.ranking.sort((a, b) => parseFloat(b.conclusao) - parseFloat(a.conclusao))
