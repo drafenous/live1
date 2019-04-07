@@ -117,19 +117,13 @@ $.extend($.fn.dataTable.defaults, {
         "<'row'<'col-sm-12'tr>>" +
         "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
     buttons: [
-        {extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">Excel</span>', exportOptions : {
-            format: {
-                body: function ( data, row, column, node ) {
-                //check if type is input using jquery
-                return $(data).is(":input") ? $(data).val() : data; }
-            }, orthogonal: 'export'}
+        {extend: 'excelHtml5', text: '<i class="fas fa-file-excel"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">Excel</span>', 
+        exportOptions : {
+             orthogonal: 'export'}
         },
-        {extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">PDF</span>', exportOptions : {
-            format: {
-                body: function ( data, row, column, node ) {
-                //check if type is input using jquery
-                return $(data).is(":input") ? $(data).val() : data; }
-            }, orthogonal: 'export'}
+        {extend: 'pdfHtml5', text: '<i class="fas fa-file-pdf"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">PDF</span>', 
+        exportOptions : {
+            orthogonal: 'export'}
         },
         {extend: 'pageLength'},
         {text: '<i class="fas fa-sync-alt"></i> <span class="d-none d-sm-none d-md-inline-flex d-lg-inline-flex d-xl-inline-flex">Recarregar</span>',

@@ -94,6 +94,7 @@
     $(document).ready(function(event) {
         //load user status
         $.ajax({
+            cache: false,
             url: "<?= base_url('/assets/src/json/metas-userStatus.json') ?>",
             dataType: 'json',
             success: (response) => {
@@ -108,6 +109,7 @@
         table = $('#dtMetas').DataTable({
             deferRender: false,
             ajax: {
+                cache: false,
                 url: "<?= base_url('assets/src/json/metas.json'); ?>",
                 dataType: 'JSON',
                 dataSrc: 'metas',
@@ -127,14 +129,14 @@
                 {
                     data: "metaFaturamento",
                     render: (data, type, row) => {
-                        return type === 'export' ? convertToMoney(data) : `<input type="text" class="revenues money form-control" name="meta[]" placeholder="0,00" value="${data}"/>`
+                        return type === 'export' ? 'R$ ' + convertToMoney(data) : `<input type="text" class="revenues money form-control" name="meta[]" placeholder="0,00" value="${data == 0 ? '' : data}"/>`
                     },
                     orderDataType: "dom-text-numeric"
                 },
                 {
                     data: "sugestao",
                     render: (data, type, row) => {
-                        return type === 'export' ? convertToMoney(data) : `<input type="text" class="suggestion money form-control" name="segestao[]" placeholder="0,00" value="${data}" readonly disabled/>`
+                        return type === 'export' ? 'R$ '+ convertToMoney(data) : `<input type="text" class="suggestion money form-control" name="segestao[]" placeholder="0,00" value="${data == 0? '' : data }" readonly disabled/>`
                     },
                     orderDataType: "dom-text-numeric"
 

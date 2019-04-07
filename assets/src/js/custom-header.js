@@ -16,3 +16,8 @@ onKeyPress: function(val, e, field, options) {
     field.mask(SPMaskBehavior.apply({}, arguments), options);
     }
 };
+
+// Globals
+window['globalSettings'] = {realTimeInterval: 1000,
+                            defaultMoneyMask: "#.##0,00"
+                        };

@@ -156,6 +156,7 @@
 $(document).ready(function(e){
     dtEntante = $('#dtEntrante').DataTable({
         ajax: {
+            cache: false,
             url: "<?= base_url('assets/src/json/gravacoes-entrantes.json'); ?>",
             dataType: 'json',
             dataSrc: 'entrantes',
@@ -184,6 +185,7 @@ $(document).ready(function(e){
 
     dtSainte = $('#dtSainte').DataTable({
         ajax: {
+            cache: false,
             url: "<?= base_url('assets/src/json/gravacoes-entrantes.json'); ?>",
             dataType: 'json',
             dataSrc: 'entrantes',

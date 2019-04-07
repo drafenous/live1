@@ -308,7 +308,7 @@
 
 		setInterval(() => {
 			realTimeCharts();
-		}, 1000);
+		}, window['globalSettings'].realTimeInterval);
 	})
 
 	function realTimeCharts() {
