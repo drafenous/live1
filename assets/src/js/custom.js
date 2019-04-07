@@ -39,7 +39,7 @@ $(document).ready(function(event){
     var today = new Date();
     var month = ("0" + (today.getMonth() + 1)).slice(-2)
     var year = today.getFullYear();
-    var day = today.getDay();
+    var day = today.getDate();
     var startDate = new Date(month + '/01/' + year);
     var endDate = new Date(month + '/' + day + '/' + year);
 
