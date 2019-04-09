@@ -4,7 +4,7 @@
 		<!-- top cards -->
 		<div class="col-md-12">
 			<hr>
-			<div class="row">
+			<div id="headers" class="row">
 				<div class="col-12 col-sm-12 col-md-3 col-xl-3" style="margin: 15px 0px">
 					<div class="col-md-12 card rounded-0" style="background-color: #16a085;">
 						<div class="card-title">
@@ -12,10 +12,10 @@
 						</div>
 						<div class="card-content">
 							<strong>Meta de Faturamento</strong><br />
-							<span>R$0,00</span>
+							<span>R$ <span id="faturamentoGeral0" class="money">...</span></span>
 							<br />
 							<strong>Faturamento Parcial</strong><br />
-							<span>R$0,00</span>
+							<span>R$ <span id="faturamentoGeral1" class="money">...</span></span>
 						</div>
 					</div>
 				</div>
@@ -26,10 +26,10 @@
 						</div>
 						<div class="card-content">
 							<strong>Meta de Faturamento</strong><br />
-							<span>R$0,00</span>
+							<span>R$ <span id="faturamentoSP0" class="money">...</span></span>
 							<br />
 							<strong>Faturamento Parcial</strong><br />
-							<span>R$0,00</span>
+							<span>R$ <span id="faturamentoSP1" class="money">...</span></span>
 						</div>
 					</div>
 				</div>
@@ -40,16 +40,16 @@
 						</div>
 						<div class="card-content">
 							<strong>Meta de Faturamento</strong><br />
-							<span>R$0,00</span>
+							<span>R$ <span id="faturamentoFSP0" class="money">...</span></span>
 							<br />
 							<strong>Faturamento Parcial</strong><br />
-							<span>R$0,00</span>
+							<span>R$ <span id="faturamentoFSP1" class="money">...</span></span>
 						</div>
 					</div>
 				</div>
 				<div class="col-12 col-sm-12 col-md-3 col-xl-3" style="margin: 15px 0px">
-					<div class="col-md-12 card rounded-0" style="background-color: #4f8998;">
-						<div class="card-title">
+					<div class="col-md-12 card rounded-0" style="background-color: #ecf0f1;">
+						<div class="card-title" style="color: #2c3e50 !important">
 							Status dos Operadores
 						</div>
 						<div class="card-content row text-center">
@@ -57,19 +57,19 @@
 								data-trigger="hover" data-placement="bottom" data-content="Logados">
 								<img src="<?= base_url('assets\images\telemarketing-on.png'); ?>"
 									style="width: 54px"><br />
-								<h3>25</h3>
+								<h3 id="headersStatusAvaiable">...</h3>
 							</div>
 							<div class="col-4 text-nowrap" style="color: #f39c12" data-toggle="popover"
 								data-trigger="hover" data-placement="bottom" data-content="Em Pausa">
 								<img src="<?= base_url('assets\images\telemarketing-pausa.png'); ?>"
 									style="width: 54px"><br />
-								<h3>10</h3>
+								<h3 id="headersStatusPaused">...</h3>
 							</div>
 							<div class="col-4 text-nowrap" style="color: #c0392b" data-toggle="popover"
 								data-trigger="hover" data-placement="bottom" data-content="Deslogados">
 								<img src="<?= base_url('assets\images\telemarketing-off.png'); ?>"
 									style="width: 54px"><br />
-								<h3>5</h3>
+								<h3 id="headersStatusUnavaiable">...</h3>
 							</div>
 						</div>
 					</div>
@@ -306,61 +306,125 @@
 			}
 		});
 
+		// Realtime
 		setInterval(() => {
-			realTimeCharts();
+			realTimeHeaders();
+			realTimeFluxoChamadas();
+			realTimeGraphTiposChamadas();
+			realTimeGraphMetaFaturamento();
+			realTimeOperatorsStatus();
 		}, window['globalSettings'].realTimeInterval);
 	})
 
-	function realTimeCharts() {
-		dataGraphFluxoChamadas['entrantes'] = [Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10)]
+	// Headers Geral, SP, FSP
+	function realTimeHeaders(){
+		$.ajax({
+			url: '<?= base_url("assets/src/json/dashboard-headers.json"); ?>',
+			cache: false,
+			dataType: 'json',
+			success: (response) => {
+				$('#faturamentoGeral0').text(response['faturamentoGeral'][0]);
+				$('#faturamentoGeral1').text(response['faturamentoGeral'][1]);
 
-		dataGraphFluxoChamadas['saintes'] = [Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10),
-		Math.floor(Math.random() * 10)]
+				$('#faturamentoSP0').text(response['faturamentoSP'][0]);
+				$('#faturamentoSP1').text(response['faturamentoSP'][1]);
 
-		dataGraphTiposChamadas['entrantes'] = Math.floor(Math.random() * 10);
-		dataGraphTiposChamadas['saintes'] = Math.floor(Math.random() * 10);
-		dataGraphTiposChamadas['naoAtendidas'] = Math.floor(Math.random() * 10);
-		dataGraphTiposChamadas['abandonadas'] = Math.floor(Math.random() * 10);
+				$('#faturamentoFSP0').text(response['faturamentoFSP'][0]);
+				$('#faturamentoFSP1').text(response['faturamentoFSP'][1]);
+
+				// mask
+				$('#headers .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true});
+				$('#headers .money').trigger('keyup')
+				return response;
+			},
+			error: (response) => {
+				return console.error(response);
+			}
+		})
+	}
+
+	// Graph Fluxo de Chamadas
+	function realTimeFluxoChamadas(){
+		$.ajax({
+			url: "<?= base_url('assets/src/json/dashboard-fluxoChamadas.json'); ?>",
+			cache: false,
+			dataType: 'json',
+			success: (response) => {
+				dataGraphFluxoChamadas['entrantes'] = response['ingoing'];
+				dataGraphFluxoChamadas['saintes'] = response['outgoing'];
+
+				graphFluxoChamadas.data.datasets[0].data = dataGraphFluxoChamadas['entrantes'];
+				graphFluxoChamadas.data.datasets[1].data = dataGraphFluxoChamadas['saintes'];
+
+				return graphFluxoChamadas.update(500);
+			},
+			error: (response) => {
+				return console.error(response);
+			}
+		})
+	}
 
 
-		//updating charts
-		graphFluxoChamadas.data.datasets[0].data = dataGraphFluxoChamadas['entrantes'];
-		graphFluxoChamadas.data.datasets[1].data = dataGraphFluxoChamadas['saintes'];
+	// Graph tipos de Chamadas
+	function realTimeGraphTiposChamadas(){
+		$.ajax({
+			url: "<?= base_url('assets/src/json/dashboard-tiposChamadas.json'); ?>",
+			cache: false,
+			dataType: 'json',
+			success: (response) => {
+				dataGraphTiposChamadas['entrantes'] = response['graph'][0];
+				dataGraphTiposChamadas['saintes'] = response['graph'][1];
+				dataGraphTiposChamadas['naoAtendidas'] = response['graph'][2];
+				dataGraphTiposChamadas['abandonadas'] = response['graph'][3];
 
-		graphTiposChamadas.data.datasets[0].data = [
-			dataGraphTiposChamadas['entrantes'],
-			dataGraphTiposChamadas['saintes'],
-			dataGraphTiposChamadas['naoAtendidas'],
-			dataGraphTiposChamadas['abandonadas']
-		];
+				graphTiposChamadas.data.datasets[0].data = [
+					dataGraphTiposChamadas['entrantes'],
+					dataGraphTiposChamadas['saintes'],
+					dataGraphTiposChamadas['naoAtendidas'],
+					dataGraphTiposChamadas['abandonadas']
+				];
 
-		graphMetaFaturamento.data.datasets[0].data = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]
+				return graphTiposChamadas.update(500);
+			},
+			error: (response) => {
+				return console.error(response);
+			}
+		})
+	}
 
-		graphFluxoChamadas.update(500);
-		graphTiposChamadas.update(500);
-		graphMetaFaturamento.update(500);
+	// Graph Meta de Faturamento
+	function realTimeGraphMetaFaturamento(){
+		$.ajax({
+			url: '<?= base_url("assets/src/json/dashboard-metaFaturamento.json"); ?>',
+			cache: false,
+			dataType: 'json',
+			success: (response) => {
+				dataMetaFaturamento = response['graph'];
+				graphMetaFaturamento.data.datasets[0].data = dataMetaFaturamento;
+
+				return graphMetaFaturamento.update(500);
+			},
+			error: (response) => {
+				return console.error(response);
+			}
+		})
+	}
+
+	function realTimeOperatorsStatus(){
+		$.ajax({
+			url: '<?= base_url("assets/src/json/dashboard-operatorsStatus.json"); ?>',
+			cache: false,
+			dataType: 'json',
+			success: (response) => {
+				$('#headersStatusAvaiable').html(response['avaiable']);
+				$('#headersStatusPaused').html(response['paused']);
+				$('#headersStatusUnavaiable').html(response['unavailable']);
+
+				return response
+			},
+			error: (response) => {
+				return console.error(response);
+			}
+		})
 	}
 </script>
