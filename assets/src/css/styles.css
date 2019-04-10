@@ -241,6 +241,13 @@ table.dataTable tbody td {
     vertical-align: middle;
 }
 
+/* hidden elements */
+.hiddenButton{
+    background-color: transparent;
+    border: none;
+    outline: 0 !important;
+}
+
 /* footer */
 
 .footer {
@@ -249,3 +256,5 @@ table.dataTable tbody td {
     line-height: 12px;
     font-size: 10px;
 }
+
+/* dashboard adjustments */
