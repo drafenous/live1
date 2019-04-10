@@ -1,6 +1,14 @@
 <main class="container" role="main">
 	<div class="row no-gutters">
-		<h1>Dashboard</h1>
+	<div class="col-md-12">
+            <h1 class="float-left">Dashboard</h1>
+            <div class="float-right text-left text-sm-left text-md-left text-xl-right" style="margin-top: 25px">
+                <div class="custom-control custom-switch" id="realTimeInfo" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-title="Atualização em tempo real" data-content="Por padrão, a atualização em tempo real de informações inicia <strong>habilitada</strong> neste módulo do sistema, clique neste ícone para <u>desabilitar</u>.">
+                    <input type="checkbox" class="custom-control-input" id="realTimeSwitch" checked>
+                    <label class="custom-control-label" for="realTimeSwitch"><i id="realTimeIcon" class="fas fa-sync"></i></label>
+                </div>
+            </div>
+        </div>
 		<!-- top cards -->
 		<div class="col-md-12">
 			<hr>
@@ -106,102 +114,14 @@
 				<!-- sidebar: right -->
 				<div class="col-md-3" style="margin: 15px 0px">
 					<div class="col-md-12" style="background-color: #ecf0f1;">
-						<div class="row ranking" style="padding: 15px">
-							<h5>Ranking</h5>
+						<div class="row ranking" style="padding: 15px; overflow: hidden;">
+							<h5>Ranking <button id="rankingOrder" class="hiddenButton" data-placement="bottom" data-trigger="hover" data-toggle="popover" data-title="Ordenar Ranking" data-content="Ao clicar a ordem da lista é alterada entre: <strong>5 primeiros</strong> e <strong>5 últimos.</strong>"><i id="rankingOrderIcon" class="fas fa-chevron-down"></i></button></h5>
 
 							<!-- ranking items -->
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-2 text-center position">
-										<h1>1</h1>
-									</div>
-									<div class="col-md-10" style="font-size: 10px;">
-										<h1 class="name text-center">Rodrigo R. Almeida</h1>
-										<div class="progress">
-											<div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-												role="progressbar" style="width: 100%" aria-valuenow="100"
-												aria-valuemin="0" aria-valuemax="100">100%</div>
-										</div>
-										<span><strong>Meta: </strong> R$0,00</span><br />
-										<span><strong>Realizado: </strong> R$0,00</span>
-									</div>
-								</div>
-								<hr>
+							<div id="rankingTopItems" style="width: 100%">
 							</div>
 
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-2 text-center position">
-										<h1>2</h1>
-									</div>
-									<div class="col-md-10" style="font-size: 10px;">
-										<h1 class="name text-center">Emilly L. Moura</h1>
-										<div class="progress">
-											<div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-												role="progressbar" style="width: 75%" aria-valuenow="75"
-												aria-valuemin="0" aria-valuemax="100">75%</div>
-										</div>
-										<span><strong>Meta: </strong> R$0,00</span><br />
-										<span><strong>Realizado: </strong> R$0,00</span>
-									</div>
-								</div>
-								<hr>
-							</div>
-
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-2 text-center position">
-										<h1>3</h1>
-									</div>
-									<div class="col-md-10" style="font-size: 10px;">
-										<h1 class="name text-center">Hugo M. Souza</h1>
-										<div class="progress">
-											<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-												role="progressbar" style="width: 50%" aria-valuenow="50"
-												aria-valuemin="0" aria-valuemax="100">50%</div>
-										</div>
-										<span><strong>Meta: </strong> R$0,00</span><br />
-										<span><strong>Realizado: </strong> R$0,00</span>
-									</div>
-								</div>
-								<hr>
-							</div>
-
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-2 text-center position">
-										<h1>4</h1>
-									</div>
-									<div class="col-md-10" style="font-size: 10px;">
-										<h1 class="name text-center">Kaic Melo</h1>
-										<div class="progress">
-											<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-												role="progressbar" style="width: 25%" aria-valuenow="25"
-												aria-valuemin="0" aria-valuemax="100">25%</div>
-										</div>
-										<span><strong>Meta: </strong> R$0,00</span><br />
-										<span><strong>Realizado: </strong> R$0,00</span>
-									</div>
-								</div>
-								<hr>
-							</div>
-
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-md-2 text-center position">
-										<h1>5</h1>
-									</div>
-									<div class="col-md-10" style="font-size: 10px;">
-										<h1 class="name text-center">Marcos Vinicios</h1>
-										<div class="progress">
-											<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-												role="progressbar" style="width: 1%" aria-valuenow="1" aria-valuemin="0"
-												aria-valuemax="100">1%</div>
-										</div>
-										<span><strong>Meta: </strong> R$0,00</span><br />
-										<span><strong>Realizado: </strong> R$0,00</span>
-									</div>
-								</div>
+							<div id="rankingBottomItems" style="width: 100%">
 							</div>
 						</div>
 					</div>
@@ -306,14 +226,53 @@
 			}
 		});
 
+		// Starter
+		realTimeHeaders();
+		realTimeFluxoChamadas();
+		realTimeGraphTiposChamadas();
+		realTimeGraphMetaFaturamento();
+		realTimeOperatorsStatus();
+		realTimeRanking();
+
+
 		// Realtime
-		setInterval(() => {
-			realTimeHeaders();
-			realTimeFluxoChamadas();
-			realTimeGraphTiposChamadas();
-			realTimeGraphMetaFaturamento();
-			realTimeOperatorsStatus();
-		}, window['globalSettings'].realTimeInterval);
+    	var statusRealTime = 'on';
+    	$('#realTimeSwitch').on('change', function(event){
+			// switch the animation of progress-bar and refresh icon
+			$('.progress-bar').toggleClass('progress-bar-animated');
+			$('#realTimeIcon').toggleClass('fa-spin');
+
+			// the switcher.
+			if(statusRealTime == 'on'){
+				// disable datatable refresh button
+				$('.dtUpdateButton').attr('disabled', true)
+				realTime = setInterval(() => {
+					realTimeHeaders();
+					realTimeFluxoChamadas();
+					realTimeGraphTiposChamadas();
+					realTimeGraphMetaFaturamento();
+					realTimeOperatorsStatus();
+					realTimeRanking();
+				}, window['globalSettings'].realTimeInterval);
+				// next status
+				statusRealTime = 'off';
+			}else{
+				clearInterval(realTime);
+				// enable datatable refresh button
+				$('.dtUpdateButton').attr('disabled', false)
+				// next status
+				statusRealTime = 'on';
+			}
+		})
+		// start realtime
+		$('#realTimeSwitch').trigger('change')
+
+		// Ranking Filter
+		$('#rankingBottomItems').hide();
+		$('#rankingOrder').on('click', function(event){
+			$('#rankingOrderIcon').toggleClass('fa-chevron-down fa-chevron-up');
+			$('#rankingTopItems, #rankingBottomItems').fadeToggle(200);
+		})
 	})
 
 	// Headers Geral, SP, FSP
@@ -323,18 +282,16 @@
 			cache: false,
 			dataType: 'json',
 			success: (response) => {
-				$('#faturamentoGeral0').text(response['faturamentoGeral'][0]);
-				$('#faturamentoGeral1').text(response['faturamentoGeral'][1]);
+				$('#faturamentoGeral0').html(response['faturamentoGeral'][0]);
+				$('#faturamentoGeral1').html(response['faturamentoGeral'][1]);
 
-				$('#faturamentoSP0').text(response['faturamentoSP'][0]);
-				$('#faturamentoSP1').text(response['faturamentoSP'][1]);
+				$('#faturamentoSP0').html(response['faturamentoSP'][0]);
+				$('#faturamentoSP1').html(response['faturamentoSP'][1]);
 
-				$('#faturamentoFSP0').text(response['faturamentoFSP'][0]);
-				$('#faturamentoFSP1').text(response['faturamentoFSP'][1]);
+				$('#faturamentoFSP0').html(response['faturamentoFSP'][0]);
+				$('#faturamentoFSP1').html(response['faturamentoFSP'][1]);
 
-				// mask
-				$('#headers .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true});
-				$('#headers .money').trigger('keyup')
+				$('#headers .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
 				return response;
 			},
 			error: (response) => {
@@ -421,6 +378,93 @@
 				$('#headersStatusUnavaiable').html(response['unavailable']);
 
 				return response
+			},
+			error: (response) => {
+				return console.error(response);
+			}
+		})
+	}
+
+	function realTimeRanking(){
+		$.ajax({
+			url: '<?= base_url("assets/src/json/dashboard-ranking.json"); ?>',
+			cache: false,
+			dataType: 'json',
+			success: (response) => {
+				// vars definitions
+				var rankingTop = response['rankingTop'];
+				var htmlTop = '';
+				var counter = 1;
+
+				// loopings
+				$.each(rankingTop, function(index, item){
+					htmlTop += `
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-2 text-center position">
+									<h1>${counter}</h1>
+								</div>
+								<div class="col-md-10" style="font-size: 10px;">
+									<h1 class="name text-center">${item.name}</h1>
+									<div class="progress">
+										<div class="progress-bar progress-bar-striped progress-bar-animated
+										${(item.completed == 100 ? 'bg-success' : (item.completed > 80 ? 'bg-success' : (item.completed) > 40 ? 'bg-warning' : 'bg-danger'))}"
+											role="progressbar" style="width: ${item.completed}%" aria-valuenow="${item.completed}"
+											aria-valuemin="0" aria-valuemax="100">${item.completed}%</div>
+									</div>
+									<span><strong>Meta: </strong> R$ <span class="money">${item.goal}</span></span><br />
+									<span><strong>Realizado: </strong> R$ <span class="money">${item.currentGoal}</span></span>
+								</div>
+							</div>
+							<hr>
+						</div>
+					`;
+					counter++
+				})
+
+				$('#rankingTopItems').html(htmlTop);
+
+				// mask
+				$('#rankingTopItems .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
+
+				// vars definitions
+				var rankingBottom = response['rankingBottom'];
+				var htmlBottom = '';
+				var counter = 5;
+
+				// loopings
+				$.each(rankingBottom, function(index, item){
+					htmlBottom += `
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-2 text-center position">
+									<h1>${counter}</h1>
+								</div>
+								<div class="col-md-10" style="font-size: 10px;">
+									<h1 class="name text-center">${item.name}</h1>
+									<div class="progress">
+										<div class="progress-bar progress-bar-striped progress-bar-animated
+										${(item.completed == 100 ? 'bg-success' : (item.completed > 80 ? 'bg-success' : (item.completed) > 40 ? 'bg-warning' : 'bg-danger'))}"
+											role="progressbar" style="width: ${item.completed}%" aria-valuenow="${item.completed}"
+											aria-valuemin="0" aria-valuemax="100">${item.completed}%</div>
+									</div>
+									<span><strong>Meta: </strong> R$ <span class="money">${item.goal}</span></span><br />
+									<span><strong>Realizado: </strong> R$ <span class="money">${item.currentGoal}</span></span>
+								</div>
+							</div>
+							<hr>
+						</div>
+					`;
+					counter--;
+				})
+				$('#rankingBottomItems').html(htmlBottom);
+
+				// mask
+				$('#rankingBottomItems .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
+
+				// set height of Ranking Widget
+				rankingHeight = $('#rankingTopItems').height();
+				$('.ranking').height(rankingHeight);
 			},
 			error: (response) => {
 				return console.error(response);
