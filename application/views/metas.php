@@ -170,7 +170,7 @@
                 }).trigger('keyup');
 
                 // input actions
-                $('.revenues').on('keydown', function() {
+                $('.revenues').on('keyup', function() {
                     $('#saveButton').attr('disabled', false);
                     $(this).css('border', '2px solid #f39c12');
                 })

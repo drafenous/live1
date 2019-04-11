@@ -3,7 +3,7 @@
 	<div class="col-md-12">
             <h1 class="float-left">Dashboard</h1>
             <div class="float-right text-left text-sm-left text-md-left text-xl-right" style="margin-top: 25px">
-                <div class="custom-control custom-switch" id="realTimeInfo" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-title="Atualização em tempo real" data-content="Por padrão, a atualização em tempo real de informações inicia <strong>habilitada</strong> neste módulo do sistema, clique neste ícone para <u>desabilitar</u>.">
+                <div class="custom-control custom-switch" id="realTimeInfo" data-popover="true" data-trigger="hover" data-placement="bottom" data-title="Atualização em tempo real" data-content="Por padrão, a atualização em tempo real de informações inicia <strong>habilitada</strong> neste módulo do sistema, clique neste ícone para <u>desabilitar</u>.">
                     <input type="checkbox" class="custom-control-input" id="realTimeSwitch" checked>
                     <label class="custom-control-label" for="realTimeSwitch"><i id="realTimeIcon" class="fas fa-sync"></i></label>
                 </div>
@@ -61,19 +61,19 @@
 							Status dos Operadores
 						</div>
 						<div class="card-content row text-center">
-							<div class="col-4 text-nowrap" style="color: #16a085" data-toggle="popover"
+							<div class="col-4 text-nowrap" style="color: #16a085" data-popover="true"
 								data-trigger="hover" data-placement="bottom" data-content="Logados">
 								<img src="<?= base_url('assets\images\telemarketing-on.png'); ?>"
 									style="width: 54px"><br />
 								<h3 id="headersStatusAvaiable">...</h3>
 							</div>
-							<div class="col-4 text-nowrap" style="color: #f39c12" data-toggle="popover"
+							<div class="col-4 text-nowrap" style="color: #f39c12" data-popover="true"
 								data-trigger="hover" data-placement="bottom" data-content="Em Pausa">
 								<img src="<?= base_url('assets\images\telemarketing-pausa.png'); ?>"
 									style="width: 54px"><br />
 								<h3 id="headersStatusPaused">...</h3>
 							</div>
-							<div class="col-4 text-nowrap" style="color: #c0392b" data-toggle="popover"
+							<div class="col-4 text-nowrap" style="color: #c0392b" data-popover="true"
 								data-trigger="hover" data-placement="bottom" data-content="Deslogados">
 								<img src="<?= base_url('assets\images\telemarketing-off.png'); ?>"
 									style="width: 54px"><br />
@@ -115,7 +115,7 @@
 				<div class="col-md-3" style="margin: 15px 0px">
 					<div class="col-md-12" style="background-color: #ecf0f1;">
 						<div class="row ranking" style="padding: 15px; overflow: hidden;">
-							<h5>Ranking <button id="rankingOrder" class="hiddenButton" data-placement="bottom" data-trigger="hover" data-toggle="popover" data-title="Ordenar Ranking" data-content="Ao clicar a ordem da lista é alterada entre: <strong>5 primeiros</strong> e <strong>5 últimos.</strong>"><i id="rankingOrderIcon" class="fas fa-chevron-down"></i></button></h5>
+							<h5>Ranking <button id="rankingOrder" class="hiddenButton" data-placement="bottom" data-trigger="hover" data-popover="true" data-title="Ordenar Ranking" data-content="Ao clicar a ordem da lista é alterada entre: <strong>5 primeiros</strong> e <strong>5 últimos.</strong>"><i id="rankingOrderIcon" class="fas fa-chevron-down"></i></button></h5>
 
 							<!-- ranking items -->
 							<div id="rankingTopItems" style="width: 100%">
@@ -228,7 +228,7 @@
 
 		// Starter
 		realTimeHeaders();
-		realTimeFluxoChamadas();
+		realTimeGraphFluxoChamadas();
 		realTimeGraphTiposChamadas();
 		realTimeGraphMetaFaturamento();
 		realTimeOperatorsStatus();
@@ -248,7 +248,7 @@
 				$('.dtUpdateButton').attr('disabled', true)
 				realTime = setInterval(() => {
 					realTimeHeaders();
-					realTimeFluxoChamadas();
+					realTimeGraphFluxoChamadas();
 					realTimeGraphTiposChamadas();
 					realTimeGraphMetaFaturamento();
 					realTimeOperatorsStatus();
@@ -291,17 +291,16 @@
 				$('#faturamentoFSP0').html(response['faturamentoFSP'][0]);
 				$('#faturamentoFSP1').html(response['faturamentoFSP'][1]);
 
-				$('#headers .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
-				return response;
+				$('#headers .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {reverse: true})
 			},
 			error: (response) => {
-				return console.error(response);
+				return console.error('[Headers]:', response);
 			}
 		})
 	}
 
 	// Graph Fluxo de Chamadas
-	function realTimeFluxoChamadas(){
+	function realTimeGraphFluxoChamadas(){
 		$.ajax({
 			url: "<?= base_url('assets/src/json/dashboard-fluxoChamadas.json'); ?>",
 			cache: false,
@@ -316,7 +315,7 @@
 				return graphFluxoChamadas.update(500);
 			},
 			error: (response) => {
-				return console.error(response);
+				return console.error('[GraphFluxoChamadas]:', response);
 			}
 		})
 	}
@@ -344,7 +343,7 @@
 				return graphTiposChamadas.update(500);
 			},
 			error: (response) => {
-				return console.error(response);
+				return console.error('[GraphTiposChamadas]:', response);
 			}
 		})
 	}
@@ -362,7 +361,7 @@
 				return graphMetaFaturamento.update(500);
 			},
 			error: (response) => {
-				return console.error(response);
+				return console.error('[GraphMetaFaturamento]:', response);
 			}
 		})
 	}
@@ -380,7 +379,7 @@
 				return response
 			},
 			error: (response) => {
-				return console.error(response);
+				return console.error('[OperatorStatus]:', response);
 			}
 		})
 	}
@@ -425,7 +424,7 @@
 				$('#rankingTopItems').html(htmlTop);
 
 				// mask
-				$('#rankingTopItems .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
+				$('#rankingTopItems .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
 
 				// vars definitions
 				var rankingBottom = response['rankingBottom'];
@@ -460,14 +459,14 @@
 				$('#rankingBottomItems').html(htmlBottom);
 
 				// mask
-				$('#rankingBottomItems .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
+				$('#rankingBottomItems .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
 
 				// set height of Ranking Widget
 				rankingHeight = $('#rankingTopItems').height();
 				$('.ranking').height(rankingHeight);
 			},
 			error: (response) => {
-				return console.error(response);
+				return console.error('[Ranking]:', response);
 			}
 		})
 	}

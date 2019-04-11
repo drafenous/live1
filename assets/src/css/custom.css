@@ -32,6 +32,14 @@
 .card {
   border-radius: 0px; }
 
+.modal-open[style] {
+  padding-right: 0px !important; }
+
+.modal-content {
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important; }
+
 .element::after {
   display: block;
   content: "";

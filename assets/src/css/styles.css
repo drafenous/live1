@@ -17,13 +17,69 @@
     display: none;
 }
 
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+.body-wrapper{
+    min-height: 100%;
+}
+
 /* header */
 #header{
     background-color: #4f8998;
     line-height: 70px;
     position: fixed;
-    z-index: 200
+    z-index: 200;
+    border-top: 3px solid #f39c12;
 }
+
+#headerDropList{
+    display: block;
+    background-color: #4f8998;
+    position: absolute;
+    z-index: 199;
+    right: 0;
+    padding: 0px !important;
+}
+
+#headerDropList ul{
+    margin: 0;
+    padding: 10px 0px;
+}
+
+#headerDropList ul li{
+    list-style: none;
+    text-align: left;
+    word-wrap: normal;
+    display: block;
+    line-height: 32px;
+    border-bottom: 1px solid transparent;
+    transition: all ease-in-out 100ms;
+}
+
+#headerDropList ul li:hover{
+    border-bottom: 1px solid #ffffff;
+    background-color: #f39c12;
+}
+
+#headerDropList ul li a:link, #headerDropList ul li a:visited{
+    font-size: 16px;
+    color: white;
+    padding: 0px 10px;
+    display: inline-block;
+    width: 100%;
+}
+#headerDropList ul li a:hover{
+    text-decoration: none;
+}
+
+#headerDropList ul li a .icon{
+    display: inline-block;
+    width: 22px !important;
+}
+
 
 /* loader */
 #loader{
@@ -81,6 +137,45 @@
     background-color: #ecf0f1;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+
+/* Header icons */
+#headerIcons{
+    position: absolute;
+    top: 0px;
+    right: 15px;
+}
+
+#headerIcons button{
+    top: 0px !important;
+    line-height: 54px;
+}
+
+#headerIcons button:hover, #headerIcons button:active{
+    background-color: rgba(0,0,0,0.3);
+}
+
+#headerIcons .icon{
+    display: inline-block;
+    height: 32px !important;
+    width: 64px !important;
+    color: white;
+    margin-top: 17px;
+}
+
+#headerIcons .badge{
+    background-color: rgba(192, 57, 43,1.0);
+    border-radius: 25px;
+    padding: 5px;
+    position: absolute;
+    display: block;
+    min-width: 20px;
+    height: 20px;
+    color: white;
+    font-size: 10px;
+    top: 40px;
+    margin-left: 40px;
 }
 
 /* menu-itens */
@@ -188,6 +283,13 @@
     background: linear-gradient(rgba(4, 85, 142, 0.5), rgba(4, 85, 142, 0.5)), url('../../images/menu/marketing-bkg.png');
 }
 
+.menu-chamados{
+    background: linear-gradient(rgba(4, 85, 142, 0.5), rgba(4, 85, 142, 0.5)), url('../../images/menu/chamados-bkg.png');
+}
+
+.menu-discador{
+    background: linear-gradient(rgba(4, 85, 142, 0.5), rgba(4, 85, 142, 0.5)), url('../../images/menu/discador-bkg.png');
+}
 /* cards */
 
 .card {
@@ -246,6 +348,8 @@ table.dataTable tbody td {
     background-color: transparent;
     border: none;
     outline: 0 !important;
+    width: auto;
+    height: auto;
 }
 
 /* footer */
