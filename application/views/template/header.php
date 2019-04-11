@@ -89,6 +89,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div id="logo" class="text-center">
             <img src="<?= base_url('assets\images\advance-management-logo.png'); ?>" title="Logotipo - Advance Management" alt="Logotipo - Advance Management" height="44px" />
         </div>
+        <div id="headerIcons">
+            <button class="hiddenButton d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-target="#modalComunicados" data-toggle="modal" data-popover="true" data-placement="bottom" data-trigger="hover" title="Comunicados" data-content="Visualize e crie novos Comunicados.">
+                <i class="fas fa-bell icon"></i>
+                <div id="badgeComunicados" class="badge">0</div>
+            </button>
+            <button class="hiddenButton d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-target="#modalOcorrencias" data-toggle="modal" data-popover="true" data-placement="bottom" data-trigger="hover" title="Ocorrências internas" data-content="Visualize e crie novas Ocorrências Internas.">
+                <i class="fas fa-exclamation-triangle icon"></i>
+                <div id="badgeOcorrencias" class="badge">0</div>
+            </button>
+            <button class="hiddenButton" id="headerPerfil" data-popover="true" data-placement="bottom" data-trigger="hover" title="Seu Perfil" data-content="Veja seu perfil, estastíticas ou mude sua senha.">
+                <i class="fas fa-user-circle icon"></i>
+            </button>
+        </div>
+        <div id="headerDropList" class="col-12 col-sm-12 col-md-2 col-xl-2 d-none">
+            <ul>
+                <li><a href="<?= base_url('#'); ?>"><i class="fas fa-user icon"></i> Meu Perfil</a></li>
+                <li><a href="<?= base_url('#'); ?>"><i class="fas fa-user-cog icon"></i> Configurações</a></li>
+                <li><a href="<?= base_url('#'); ?>"><i class="fas fa-users icon"></i> Lista de Usuários</a></li>
+                <li><a href="<?= base_url('#'); ?>"><i class="fas fa-sign-out-alt icon"></i> Sair</a></li>
+            </ul>
+        </div>
     </header>
     <div style="height: 80px; display: block;"></div>
 
@@ -98,7 +119,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="row no-gutters">
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/dashboard'); ?>">
-                        <div class="menu-background menu-dashboard" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Dashboard" data-content="Acompanhe em tempo real status de operadores, dados de seu faturamento e chamadas.">
+                        <div class="menu-background menu-dashboard" data-popover="true" data-placement="bottom" data-trigger="hover" title="Dashboard" data-content="Acompanhe em tempo real status de operadores, dados de seu faturamento e chamadas.">
                             <i class="fas fa-chart-pie icon"></i>
                             <br />
                             Dashboard
@@ -106,8 +127,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </a>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
+                    <a href="<?= base_url('/discador'); ?>">
+                        <div class="menu-background menu-discador" data-popover="true" data-placement="bottom" data-trigger="hover" title="Discador" data-content="Acesse a central operacional do sistema, efetue discagens automaticamente conforme programado por Campanhas, Agendamentos ou atue na área Receptiva.">
+                        <i class="fas fa-phone-square icon"></i>
+                            <br />
+                            Discador
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
+                    <a href="<?= base_url('/realtime'); ?>">
+                        <div class="menu-background menu-realtime" data-popover="true" data-placement="bottom" data-trigger="hover" title="Realtime" data-content="Monitore e gerencie em tempo real sua equipe de telemarketing.">
+                            <i class="fas fa-clock icon"></i>
+                            <br />
+                            Realtime
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/ranking'); ?>">
-                        <div class="menu-background menu-ranking" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Ranking" data-content="Seus operadores agrupados de acordo com metas de faturamento e chamadas.">
+                        <div class="menu-background menu-ranking" data-popover="true" data-placement="bottom" data-trigger="hover" title="Ranking" data-content="Seus operadores agrupados de acordo com metas de faturamento e chamadas.">
                             <i class="fas fa-list-ol icon"></i>
                             <br />
                             Ranking
@@ -116,7 +155,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/metas'); ?>">
-                        <div class="menu-background menu-metas" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Metas" data-content="Insira e edite metas de faturamento e chamadas dos operadores.">
+                        <div class="menu-background menu-metas" data-popover="true" data-placement="bottom" data-trigger="hover" title="Metas" data-content="Insira e edite metas de faturamento e chamadas dos operadores.">
                             <i class="fas fa-chart-line icon"></i>
                             <br />
                             Metas
@@ -124,44 +163,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </a>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
-                    <a href="<?= base_url('/gravacoes'); ?>">
-                        <div class="menu-background menu-gravacoes" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Gravações" data-content="Ouça todas as chamadas de entrada e saída, contando com filtros para uma busca específica.">
-                            <i class="fas fa-headphones-alt icon"></i>
-                            <br />
-                            Gravações
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/pedidos'); ?>">
-                        <div class="menu-background menu-pedidos" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Pedidos" data-content="Todos os pedidos listados de acordo com período e operador.">
-                            <i class="fas fa-paste icon"></i>
+                        <div class="menu-background menu-pedidos" data-popover="true" data-placement="bottom" data-trigger="hover" title="Pedidos" data-content="Todos os pedidos listados de acordo com o período e operador.">
+                            <i class="fas fa-file-invoice-dollar icon"></i>
                             <br />
                             Pedidos
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
-                    <a href="<?= base_url('/realtime'); ?>">
-                        <div class="menu-background menu-realtime" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Realtime" data-content="Monitore e gerencie em tempo real sua equipe de telemarketing.">
-                            <i class="fas fa-clock icon"></i>
+                    <a href="<?= base_url('/chamados'); ?>">
+                        <div class="menu-background menu-chamados" data-popover="true" data-placement="bottom" data-trigger="hover" title="Chamados" data-content="Abra um novo chamadó para um operador específico ou analise os demais chamados em aberto.">
+                            <i class="fas fa-paste icon"></i>
                             <br />
-                            Realtime
+                            Registro de Chamados
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
-                    <a href="<?= base_url('/campapnhas'); ?>">
-                        <div class="menu-background menu-campanhas" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Campanha de Discagem Automática" data-content="Crie e monitore campanhas de leads e de sua carteira de clientes.">
-                            <i class="fas fa-bullhorn icon"></i>
+                    <a href="<?= base_url('/comunicados'); ?>">
+                        <div class="menu-background menu-comunicados" data-popover="true" data-placement="bottom" data-trigger="hover" title="Comunicados" data-content="Visualize e crie novos comunicados.">
+                            <i class="fas fa-bell icon"></i>
                             <br />
-                            Campanha de Discagem<br />Automática
+                            Comunicados
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
+                    <a href="<?= base_url('/ocorrencias'); ?>">
+                        <div class="menu-background menu-ocorrencias" data-popover="true" data-placement="bottom" data-trigger="hover" title="Ocorrências Internas" data-content="Visualize e crie novas ocorrências internas.">
+                            <i class="fas fa-exclamation-triangle icon"></i>
+                            <br />
+                            Ocorrências Internas
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/carteiras'); ?>">
-                        <div class="menu-background menu-carteiras" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Carteiras" data-content="Confira sua carteira de clientes filtrando por operador e cliente.">
+                        <div class="menu-background menu-carteiras" data-popover="true" data-placement="bottom" data-trigger="hover" title="Carteiras" data-content="Confira sua carteira de clientes filtrando por operador e cliente.">
                             <i class="fas fa-id-card icon"></i>
                             <br />
                             Carteiras
@@ -170,7 +209,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/leads'); ?>">
-                        <div class="menu-background menu-leads" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Leads" data-content="Insira novos prospects e liste os já existentes.">
+                        <div class="menu-background menu-leads" data-popover="true" data-placement="bottom" data-trigger="hover" title="Leads" data-content="Insira novos prospects e liste os já existentes.">
                             <i class="fas fa-handshake icon"></i>
                             <br />
                             Leads
@@ -178,8 +217,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </a>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
+                    <a href="<?= base_url('/campapnhas'); ?>">
+                        <div class="menu-background menu-campanhas" data-popover="true" data-placement="bottom" data-trigger="hover" title="Campanha de Discagem Automática" data-content="Crie e monitore campanhas de leads e de sua carteira de clientes.">
+                            <i class="fas fa-bullhorn icon"></i>
+                            <br />
+                            Campanha de Discagem<br />Automática
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
+                    <a href="<?= base_url('/mensagem-marketing'); ?>">
+                        <div class="menu-background menu-marketing" data-popover="true" data-placement="bottom" data-trigger="hover" title="Mensagem Marketing" data-content="Crie campanhas de mensagens massivas por meio de SMS, EMAIL e MENSAGEM FONADA.">
+                            <i class="fas fa-sms icon"></i>
+                            <br />
+                            Mensagem Marketing
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/agendamentos'); ?>">
-                        <div class="menu-background menu-agendamentos" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Agendamentos" data-content="Agende ligações para um operador específico e confira os agendamentos perdidos.">
+                        <div class="menu-background menu-agendamentos" data-popover="true" data-placement="bottom" data-trigger="hover" title="Agendamentos" data-content="Agende ligações para um operador específico e confira os agendamentos perdidos.">
                             <i class="fas fa-calendar-check icon"></i>
                             <br />
                             Agendamentos
@@ -188,7 +245,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/callback'); ?>">
-                        <div class="menu-background menu-callback" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Callback" data-content="Confira as ligações abandonadas e não atendidas na fila e agende retorno.">
+                        <div class="menu-background menu-callback" data-popover="true" data-placement="bottom" data-trigger="hover" title="Callback" data-content="Confira as ligações abandonadas e não atendidas na fila e agende retorno.">
                             <i class="fas fa-reply icon"></i>
                             <br />
                             Callback
@@ -197,7 +254,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/voicemail'); ?>">
-                        <div class="menu-background menu-voicemail" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Voicemail" data-content="Ouça as mensagens deixadas no correio de voz agrupadas por fila.">
+                        <div class="menu-background menu-voicemail" data-popover="true" data-placement="bottom" data-trigger="hover" title="Voicemail" data-content="Ouça as mensagens deixadas no correio de voz agrupadas por fila.">
                             <span class="fa-layers fa-2x icon">
                                 <i class="fas fa-tape fa-flip-horizontal" data-fa-transform="right-5 shrink-3" ></i>
                                 <i class="fas fa-tape" data-fa-transform="left-5 shrink-3" ></i>  
@@ -208,41 +265,64 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     </a>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
-                    <a href="<?= base_url('/comunicados'); ?>">
-                        <div class="menu-background menu-comunicados" data-toggle="popover" data-placement="top" data-trigger="hover" title="Comunicados" data-content="Visualize e crie novos comunicados.">
-                            <i class="fas fa-bell icon"></i>
+                    <a href="<?= base_url('/gravacoes'); ?>">
+                        <div class="menu-background menu-gravacoes" data-popover="true" data-placement="bottom" data-trigger="hover" title="Gravações" data-content="Ouça todas as chamadas de entrada e saída, contando com filtros para uma busca específica.">
+                            <i class="fas fa-headphones-alt icon"></i>
                             <br />
-                            Comunicados
-                        </div>
-                    </a>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
-                    <a href="<?= base_url('/ocorrencias'); ?>">
-                        <div class="menu-background menu-ocorrencias" data-toggle="popover" data-placement="top" data-trigger="hover" title="Ocorrências" data-content="Visualize e crie novas ocorrências.">
-                            <i class="fas fa-exclamation-triangle icon"></i>
-                            <br />
-                            Ocorrências
+                            Gravações
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
                     <a href="<?= base_url('/relatórios'); ?>">
-                        <div class="menu-background menu-relatorios" data-toggle="popover" data-placement="top" data-trigger="hover" title="Relatórios" data-content="Otimize suas decisões com o auxílio de relatórios de faturamento, operadores e chamadas.">
+                        <div class="menu-background menu-relatorios" data-popover="true" data-placement="top" data-trigger="hover" title="Relatórios" data-content="Otimize suas decisões com o auxílio de relatórios de faturamento, operadores e chamadas.">
                         <i class="fas fa-signal icon"></i>
                             <br />
                             Relatórios
                         </div>
                     </a>
                 </div>
-                <div class="col-6 col-sm-6 col-lg-4 col-md-4 col-xl-3 menu-item">
-                    <a href="<?= base_url('/mensagem-marketing'); ?>">
-                        <div class="menu-background menu-marketing" data-toggle="popover" data-placement="top" data-trigger="hover" title="Mensagem Marketing" data-content="Crie campanhas de mensagens massivas por meio de SMS, EMAIL e MENSAGEM FONADA.">
-                            <i class="fas fa-sms icon"></i>
-                            <br />
-                            Mensagem Marketing
-                        </div>
-                    </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- header modals -->
+    <div class="modal fade" id="modalComunicados" tabindex="-1" role="dialog" aria-labelledby="modalComunicadosTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalComunicadosTitle">Comunicados</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+
+    <div class="modal fade" id="modalOcorrencias" tabindex="-1" role="dialog" aria-labelledby="modalOcorrenciasTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalOcorrenciasTitle">Ocorrências</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="body-wrapper overflowHidden">

@@ -17,6 +17,8 @@ $(document).ready(function(event){
     url = url.split('/');
     if((url[3] == 'home') || (url[4] == 'home') || (url[3] == '') || (url[4] == '')){
         $('#menuIcon').hide()
+        $('.body-wrapper').removeClass('body-wrapper');
+        $('.footer').hide();
         $('#menu').show();
     }
 
@@ -28,7 +30,7 @@ $(document).ready(function(event){
     });
     
     // popover
-    $('[data-toggle="popover"]').popover({
+    $('[data-popover="true"]').popover({
         html: true,
     });
 
@@ -104,6 +106,17 @@ $(document).ready(function(event){
             close: 'far fa-times'
         }
     });
+
+    // Header Badges
+    headerBadges();
+    setInterval(() => {
+        headerBadges();
+    }, window['globalSettings'].realTimeInterval);
+
+    // Header user menu
+    $('#headerPerfil').on('click', (event) => {
+        $('#headerDropList').toggleClass('d-none');
+    })
 })
 
 // Datatables Default Settings
@@ -198,4 +211,22 @@ $.fn.dataTable.ext.order['dom-checkbox'] = function  ( settings, col )
     return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
         return $('input', td).prop('checked') ? '1' : '0';
     } );
+}
+
+// header badges
+function headerBadges(){
+    $.ajax({
+        cache: false,
+        url: 'assets/src/json/header-badges.json',
+        dataType: 'json',
+        success: (response) => {
+            $('#badgeComunicados').html(response.badges[0]);
+            $('#badgeOcorrencias').html(response.badges[1]);
+
+            return response;
+        },
+        error: (response) =>{
+            return console.error('[headerBadges]:', response)
+        }
+    })
 }

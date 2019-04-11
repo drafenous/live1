@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <h1 class="float-left">Ranking</h1>
             <div class="float-right text-left text-sm-left text-md-left text-xl-right" style="margin-top: 25px">
-                <div class="custom-control custom-switch" id="realTimeInfo" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-title="Atualização em tempo real" data-content="Por padrão, a atualização em tempo real de informações inicia <strong>habilitada</strong> neste módulo do sistema, clique neste ícone para <u>desabilitar</u>.">
+                <div class="custom-control custom-switch" id="realTimeInfo" data-popover="true" data-trigger="hover" data-placement="bottom" data-title="Atualização em tempo real" data-content="Por padrão, a atualização em tempo real de informações inicia <strong>habilitada</strong> neste módulo do sistema, clique neste ícone para <u>desabilitar</u>.">
                     <input type="checkbox" class="custom-control-input" id="realTimeSwitch" checked>
                     <label class="custom-control-label" for="realTimeSwitch"><i id="realTimeIcon" class="fas fa-sync"></i></label>
                 </div>
@@ -160,7 +160,7 @@ $(document).ready(function(event){
         drawCallback: function(settings){
             // money format
             $('#dtRanking th').removeClass('money');
-            $('#dtRanking .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
+            $('#dtRanking .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
         }
     });
 
@@ -310,7 +310,7 @@ function loadRanking(){
 
             // set html
             $('#rankingList').html(rankingList);
-            $('#rankingList .money').mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
+            $('#rankingList .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
             return $('#filtrar').trigger('change');
         },
         error: (response) => {

@@ -66,6 +66,17 @@ $border-radius-small: 0px;
     border-radius: $border-radius-base;
 }
 
+// modal
+.modal-open[style] {
+    padding-right: 0px !important;
+}
+
+.modal-content  {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important; 
+}
+
 $custom-file-text: (
   en: "Browse",
   pt-BR: "Selecionar"

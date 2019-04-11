@@ -1,7 +1,9 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-
+    <!-- Sticky Footer -->
+    <div class="push"></div>
+</div>
 <footer class="footer text-center">
     &copy 2019 - Advance Telecom<br/>
     Todos os direitos reservados.
