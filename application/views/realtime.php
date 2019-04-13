@@ -11,26 +11,17 @@
         </div>
         <div class="col-md-12">
             <hr/>
-            <div class="row">
-
-                <div class="col-md-4" style="margin: 15px 0px; ">
-                    <div class="col-md-12" style="background-color: #ecf0f1">
-                        <div class="row">
-                            <div class="col-md-4"><img src="<?= base_url('assets\images\default-profile.png'); ?>" alt="Imagem de Perfil" title="Image de Perfil" class="img-responsive thumbnail rounded-circle" style="width: 100%; height: 100%"></div>
-                            <div class="col-md-8">
-                                <strong>Nome:</strong> Rodrigo R. Almeida<br/>
-                                <strong>Ramal:</strong> 7001<br/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="row" id="realTimeList">
+                <!-- realTime list -->
             </div>
         </div>
     </div>
 </main>
 <script>
 $(document).ready(function(event){
+    // Starter
+    realTimeItems();
+
     // Realtime
     var statusRealTime = 'on';
     $('#realTimeSwitch').on('change', function(event) {
@@ -43,7 +34,7 @@ $(document).ready(function(event){
             // disable datatable refresh button
             $('.dtUpdateButton').attr('disabled', true)
             realTime = setInterval(() => {
-                console.log('realtime');
+                realTimeItems();
             }, window['globalSettings'].realTimeInterval);
             // next status
             statusRealTime = 'off';
@@ -57,12 +48,63 @@ $(document).ready(function(event){
     })
     // start realtime
     $('#realTimeSwitch').trigger('change')
-
-    // Ranking Filter
-    $('#rankingBottomItems').hide();
-    $('#rankingOrder').on('click', function(event) {
-        $('#rankingOrderIcon').toggleClass('fa-chevron-down fa-chevron-up');
-        $('#rankingTopItems, #rankingBottomItems').fadeToggle(200);
-    })
 })
+
+function realTimeItems(){
+    $.ajax({
+        url: "<?= base_url('assets/src/json/realtime.json'); ?>",
+        cache: false,
+        dataType: 'json',
+        success: (response) => {
+            var html = '';
+            $.each(response.realtime, function(index, item){
+                html += `
+                <div class="col-md-4" id="rtItem_${item.id}" style="margin: 15px 0px;">
+                    <div class="col-md-12" style="background-color: #ecf0f1; padding: 15px 15px 0px 15px">
+                        <div class="row">
+                            <div class="col-md-4"><img src="assets/images/default-profile.png" alt="Imagem de Perfil" title="Image de Perfil" class="img-responsive thumbnail rounded-circle" style="width: 100%; height: 100%"></div>
+                            <div class="col-md-8">
+                                ${item.name}<br/>
+                                <strong>Ramal:</strong> ${item.ramal}<br/>
+                                <strong>Status:</strong> ${item['info'].status}<br/>
+                            </div>
+                        </div>
+                        <div class="row flex-nowrap realtimeItemOptions" style="overflow-x: hidden; background-color: #4f8998; margin-top: 15px; line-height: 35px; color: white">
+                            <div class="col-md-6">
+                                <i class="fas fa-phone-square"></i> Linha Disponível
+                            </div>
+                            <div class="col-md-4">
+                                <i class="fas fa-clock"></i> 00:00
+                            </div>
+                            <div class="col-md-2">
+                                <button class="hiddenButton itemOptionsShow" style="color: white" data-popover="true" data-trigger="hover" data-title="Ver opções" data-content="Ver mais opções de acompanhamento em realtime">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="hiddenButton itemOptionsHide" style="color: white" data-popover="true" data-trigger="hover" data-title="Fechar Opções" data-content="Fechar opções de acompanhamento em realtime">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+            })
+            $('#realTimeList').html(html);
+
+            // Realtime item options
+            $('.itemOptionsShow').on('click', function(event){
+                var width = $('.realtimeItemOptions').width()
+                $(this).closest('.realtimeItemOptions').animate({scrollLeft: width});
+            })
+            $('.itemOptionsHide').on('click', function(event){
+                $(this).closest('.realtimeItemOptions').animate({scrollLeft: 0});
+            })
+        },
+        error: (response) => {
+            return console.error('[realTimeItems]:', response)
+        }
+    })
+}
 </script>
