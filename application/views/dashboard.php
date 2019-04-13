@@ -1,14 +1,14 @@
 <main class="container" role="main">
 	<div class="row no-gutters">
-	<div class="col-md-12">
-            <h1 class="float-left">Dashboard</h1>
-            <div class="float-right text-left text-sm-left text-md-left text-xl-right" style="margin-top: 25px">
-                <div class="custom-control custom-switch" id="realTimeInfo" data-popover="true" data-trigger="hover" data-placement="bottom" data-title="Atualização em tempo real" data-content="Por padrão, a atualização em tempo real de informações inicia <strong>habilitada</strong> neste módulo do sistema, clique neste ícone para <u>desabilitar</u>.">
-                    <input type="checkbox" class="custom-control-input" id="realTimeSwitch" checked>
-                    <label class="custom-control-label" for="realTimeSwitch"><i id="realTimeIcon" class="fas fa-sync"></i></label>
-                </div>
-            </div>
-        </div>
+		<div class="col-md-12">
+			<h1 class="float-left">Dashboard</h1>
+			<div class="float-right text-left text-sm-left text-md-left text-xl-right" style="margin-top: 25px">
+				<div class="custom-control custom-switch" id="realTimeInfo" data-popover="true" data-trigger="hover" data-placement="bottom" data-title="Atualização em tempo real" data-content="Por padrão, a atualização em tempo real de informações inicia <strong>habilitada</strong> neste módulo do sistema, clique neste ícone para <u>desabilitar</u>.">
+					<input type="checkbox" class="custom-control-input" id="realTimeSwitch" checked>
+					<label class="custom-control-label" for="realTimeSwitch"><i id="realTimeIcon" class="fas fa-sync"></i></label>
+				</div>
+			</div>
+		</div>
 		<!-- top cards -->
 		<div class="col-md-12">
 			<hr>
@@ -61,22 +61,16 @@
 							Status dos Operadores
 						</div>
 						<div class="card-content row text-center">
-							<div class="col-4 text-nowrap" style="color: #16a085" data-popover="true"
-								data-trigger="hover" data-placement="bottom" data-content="Logados">
-								<img src="<?= base_url('assets\images\telemarketing-on.png'); ?>"
-									style="width: 54px"><br />
+							<div class="col-4 text-nowrap" style="color: #16a085" data-popover="true" data-trigger="hover" data-placement="bottom" data-content="Logados">
+								<img src="<?= base_url('assets\images\telemarketing-on.png'); ?>" style="width: 54px"><br />
 								<h3 id="headersStatusAvaiable">...</h3>
 							</div>
-							<div class="col-4 text-nowrap" style="color: #f39c12" data-popover="true"
-								data-trigger="hover" data-placement="bottom" data-content="Em Pausa">
-								<img src="<?= base_url('assets\images\telemarketing-pausa.png'); ?>"
-									style="width: 54px"><br />
+							<div class="col-4 text-nowrap" style="color: #f39c12" data-popover="true" data-trigger="hover" data-placement="bottom" data-content="Em Pausa">
+								<img src="<?= base_url('assets\images\telemarketing-pausa.png'); ?>" style="width: 54px"><br />
 								<h3 id="headersStatusPaused">...</h3>
 							</div>
-							<div class="col-4 text-nowrap" style="color: #c0392b" data-popover="true"
-								data-trigger="hover" data-placement="bottom" data-content="Deslogados">
-								<img src="<?= base_url('assets\images\telemarketing-off.png'); ?>"
-									style="width: 54px"><br />
+							<div class="col-4 text-nowrap" style="color: #c0392b" data-popover="true" data-trigger="hover" data-placement="bottom" data-content="Deslogados">
+								<img src="<?= base_url('assets\images\telemarketing-off.png'); ?>" style="width: 54px"><br />
 								<h3 id="headersStatusUnavaiable">...</h3>
 							</div>
 						</div>
@@ -133,10 +127,18 @@
 
 <script>
 	//Setting Global Vars:
-	dataGraphFluxoChamadas = { entrantes: [], saintes: [] };
-	dataGraphTiposChamadas = { atendidas: [], naoAtendidas: [], abandonadas: [], transferidas: [] };
+	dataGraphFluxoChamadas = {
+		entrantes: [],
+		saintes: []
+	};
+	dataGraphTiposChamadas = {
+		atendidas: [],
+		naoAtendidas: [],
+		abandonadas: [],
+		transferidas: []
+	};
 
-	$(document).ready(function (event) {
+	$(document).ready(function(event) {
 		// load charts
 		var ctxGraphFluxoChamadas = document.getElementById("graph-fluxo-chamadas").getContext("2d");
 		graphFluxoChamadas = new Chart(ctxGraphFluxoChamadas, {
@@ -144,21 +146,22 @@
 			data: {
 				labels: ['07h', '08h', '09h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h'],
 				datasets: [{
-					label: 'Ligações Entrantes',
-					data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-					backgroundColor: 'rgba(22, 160, 133, 0.3)',
-					pointBackgroundColor: 'rgba(22, 160, 133, 1.0)',
-					borderColor: 'rgba(22, 160, 133, 1.0)',
-					borderWidth: 1
-				},
-				{
-					label: 'Ligações Saíntes',
-					data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-					backgroundColor: 'rgba(41, 128, 185, 0.3)',
-					pointBackgroundColor: 'rgba(41, 128, 185, 1.0)',
-					borderColor: 'rgba(41, 128, 185, 1.0)',
-					borderWidth: 1
-				}]
+						label: 'Ligações Entrantes',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+						backgroundColor: 'rgba(22, 160, 133, 0.3)',
+						pointBackgroundColor: 'rgba(22, 160, 133, 1.0)',
+						borderColor: 'rgba(22, 160, 133, 1.0)',
+						borderWidth: 1
+					},
+					{
+						label: 'Ligações Saíntes',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+						backgroundColor: 'rgba(41, 128, 185, 0.3)',
+						pointBackgroundColor: 'rgba(41, 128, 185, 1.0)',
+						borderColor: 'rgba(41, 128, 185, 1.0)',
+						borderWidth: 1
+					}
+				]
 			},
 			options: {
 				scales: {
@@ -236,14 +239,14 @@
 
 
 		// Realtime
-    	var statusRealTime = 'on';
-    	$('#realTimeSwitch').on('change', function(event){
+		var statusRealTime = 'on';
+		$('#realTimeSwitch').on('change', function(event) {
 			// switch the animation of progress-bar and refresh icon
 			$('.progress-bar').toggleClass('progress-bar-animated');
 			$('#realTimeIcon').toggleClass('fa-spin');
 
 			// the switcher.
-			if(statusRealTime == 'on'){
+			if (statusRealTime == 'on') {
 				// disable datatable refresh button
 				$('.dtUpdateButton').attr('disabled', true)
 				realTime = setInterval(() => {
@@ -256,7 +259,7 @@
 				}, window['globalSettings'].realTimeInterval);
 				// next status
 				statusRealTime = 'off';
-			}else{
+			} else {
 				clearInterval(realTime);
 				// enable datatable refresh button
 				$('.dtUpdateButton').attr('disabled', false)
@@ -269,14 +272,14 @@
 
 		// Ranking Filter
 		$('#rankingBottomItems').hide();
-		$('#rankingOrder').on('click', function(event){
+		$('#rankingOrder').on('click', function(event) {
 			$('#rankingOrderIcon').toggleClass('fa-chevron-down fa-chevron-up');
 			$('#rankingTopItems, #rankingBottomItems').fadeToggle(200);
 		})
 	})
 
 	// Headers Geral, SP, FSP
-	function realTimeHeaders(){
+	function realTimeHeaders() {
 		$.ajax({
 			url: '<?= base_url("assets/src/json/dashboard-headers.json"); ?>',
 			cache: false,
@@ -291,7 +294,9 @@
 				$('#faturamentoFSP0').html(response['faturamentoFSP'][0]);
 				$('#faturamentoFSP1').html(response['faturamentoFSP'][1]);
 
-				$('#headers .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {reverse: true})
+				$('#headers .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {
+					reverse: true
+				})
 			},
 			error: (response) => {
 				return console.error('[Headers]:', response);
@@ -300,7 +305,7 @@
 	}
 
 	// Graph Fluxo de Chamadas
-	function realTimeGraphFluxoChamadas(){
+	function realTimeGraphFluxoChamadas() {
 		$.ajax({
 			url: "<?= base_url('assets/src/json/dashboard-fluxoChamadas.json'); ?>",
 			cache: false,
@@ -322,7 +327,7 @@
 
 
 	// Graph tipos de Chamadas
-	function realTimeGraphTiposChamadas(){
+	function realTimeGraphTiposChamadas() {
 		$.ajax({
 			url: "<?= base_url('assets/src/json/dashboard-tiposChamadas.json'); ?>",
 			cache: false,
@@ -349,7 +354,7 @@
 	}
 
 	// Graph Meta de Faturamento
-	function realTimeGraphMetaFaturamento(){
+	function realTimeGraphMetaFaturamento() {
 		$.ajax({
 			url: '<?= base_url("assets/src/json/dashboard-metaFaturamento.json"); ?>',
 			cache: false,
@@ -366,7 +371,7 @@
 		})
 	}
 
-	function realTimeOperatorsStatus(){
+	function realTimeOperatorsStatus() {
 		$.ajax({
 			url: '<?= base_url("assets/src/json/dashboard-operatorsStatus.json"); ?>',
 			cache: false,
@@ -384,7 +389,7 @@
 		})
 	}
 
-	function realTimeRanking(){
+	function realTimeRanking() {
 		$.ajax({
 			url: '<?= base_url("assets/src/json/dashboard-ranking.json"); ?>',
 			cache: false,
@@ -396,7 +401,7 @@
 				var counter = 1;
 
 				// loopings
-				$.each(rankingTop, function(index, item){
+				$.each(rankingTop, function(index, item) {
 					htmlTop += `
 						<div class="col-md-12">
 							<div class="row">
@@ -424,7 +429,9 @@
 				$('#rankingTopItems').html(htmlTop);
 
 				// mask
-				$('#rankingTopItems .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
+				$('#rankingTopItems .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {
+					reverse: true
+				}).trigger('keyup');
 
 				// vars definitions
 				var rankingBottom = response['rankingBottom'];
@@ -432,7 +439,7 @@
 				var counter = 5;
 
 				// loopings
-				$.each(rankingBottom, function(index, item){
+				$.each(rankingBottom, function(index, item) {
 					htmlBottom += `
 						<div class="col-md-12">
 							<div class="row">
@@ -459,7 +466,9 @@
 				$('#rankingBottomItems').html(htmlBottom);
 
 				// mask
-				$('#rankingBottomItems .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {reverse: true}).trigger('keyup');
+				$('#rankingBottomItems .money').unmask().mask(window['globalSettings'].defaultMoneyMask, {
+					reverse: true
+				}).trigger('keyup');
 
 				// set height of Ranking Widget
 				rankingHeight = $('#rankingTopItems').height();

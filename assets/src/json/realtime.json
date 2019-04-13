@@ -1,0 +1,81 @@
+{
+    "realtime": [
+        {
+            "id": 1,
+            "name": "Rodrigo R. Almeida",
+            "ramal": 7001,
+            "info": {
+                "status": "logado",
+                "ringStatus": false,
+                "callStatus": true,
+                "number": 11971919512
+            }
+        },
+        {
+            "id": 2,
+            "name": "Emilly L. Moura",
+            "ramal": 7004,
+            "info": {
+                "status": "logado",
+                "ringStatus": false,
+                "callStatus": true,
+                "number": 11971919512
+            }
+        },
+        {
+            "id": 3,
+            "name": "Kaic Melo",
+            "ramal": 7003,
+            "info": {
+                "status": "logado",
+                "ringStatus": false,
+                "callStatus": true,
+                "number": 11971919512
+            }
+        },
+        {
+            "id": 4,
+            "name": "Hugo M. Souza",
+            "ramal": 7000,
+            "info": {
+                "status": "logado",
+                "ringStatus": false,
+                "callStatus": true,
+                "number": 11971919512
+            }
+        },
+        {
+            "id": 5,
+            "name": "Marcos Vinicius",
+            "ramal": 7002,
+            "info": {
+                "status": "logado",
+                "ringStatus": false,
+                "callStatus": true,
+                "number": 11971919512
+            }
+        },
+        {
+            "id": 6,
+            "name": "Danielle Azarias",
+            "ramal": 7000,
+            "info": {
+                "status": "logado",
+                "ringStatus": false,
+                "callStatus": true,
+                "number": 11971919512
+            }
+        },
+        {
+            "id": 7,
+            "name": "Israel Henrique",
+            "ramal": 6023,
+            "info": {
+                "status": "logado",
+                "ringStatus": false,
+                "callStatus": true,
+                "number": 11971919512
+            }
+        }
+    ]
+}

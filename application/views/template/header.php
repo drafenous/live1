@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <html lang="pt-BR">
 
 <head>
-    <title>Advance Management</title>
+    <title><?= $page_title ?> - Advance Management</title>
     <!-- meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">

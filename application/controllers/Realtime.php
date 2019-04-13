@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Ranking extends CI_Controller {
+class Realtime extends CI_Controller {
 	public function index()
 	{
         $data['page_title'] = 'Ranking';
 		$this->load->view('template/header', $data);
-		$this->load->view('ranking');
+		$this->load->view('realtime');
 		$this->load->view('template/footer');
 	}
 }
