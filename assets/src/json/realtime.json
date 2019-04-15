@@ -7,7 +7,7 @@
             "info": {
                 "status": "logado",
                 "ringStatus": false,
-                "callStatus": true,
+                "callStatus": false,
                 "number": 11971919512
             }
         },

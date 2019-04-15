@@ -20,7 +20,7 @@
 <script>
 $(document).ready(function(event){
     // Starter
-    realTimeItems();
+    poputaleRealTime();
 
     // Realtime
     var statusRealTime = 'on';
@@ -34,77 +34,96 @@ $(document).ready(function(event){
             // disable datatable refresh button
             $('.dtUpdateButton').attr('disabled', true)
             realTime = setInterval(() => {
-                realTimeItems();
+                poputaleRealTime();
             }, window['globalSettings'].realTimeInterval);
             // next status
             statusRealTime = 'off';
         } else {
             clearInterval(realTime);
-            // enable datatable refresh button
-            $('.dtUpdateButton').attr('disabled', false)
             // next status
             statusRealTime = 'on';
         }
     })
+
     // start realtime
     $('#realTimeSwitch').trigger('change')
 })
 
-function realTimeItems(){
+function poputaleRealTime(){
     $.ajax({
         url: "<?= base_url('assets/src/json/realtime.json'); ?>",
         cache: false,
         dataType: 'json',
+        async: true,
         success: (response) => {
-            var html = '';
             $.each(response.realtime, function(index, item){
-                html += `
-                <div class="col-md-4" id="rtItem_${item.id}" style="margin: 15px 0px;">
-                    <div class="col-md-12" style="background-color: #ecf0f1; padding: 15px 15px 0px 15px">
-                        <div class="row">
-                            <div class="col-md-4"><img src="assets/images/default-profile.png" alt="Imagem de Perfil" title="Image de Perfil" class="img-responsive thumbnail rounded-circle" style="width: 100%; height: 100%"></div>
-                            <div class="col-md-8">
-                                ${item.name}<br/>
-                                <strong>Ramal:</strong> ${item.ramal}<br/>
-                                <strong>Status:</strong> ${item['info'].status}<br/>
+                if($('#rtItem_' + item.id).length){
+                    if(item['info'].ringStatus == true){
+                        $('#rtItem_' + item.id).addClass('ringing');
+                    }else{
+                        $('#rtItem_' + item.id).removeClass('ringing');
+                    }
+                    $('#rtItem_' + item.id + ' .rtiName').html(item.name);
+                    $('#rtItem_' + item.id + ' .rtiRamal').html(item.ramal);
+                    $('#rtItem_' + item.id + ' .rtiStatus').html(item['info'].status);
+                    $('#rtItem_' + item.id + ' .rtiCallStatus').html(item['info'].callStatus == true ? `<span class="phone">${item['info'].number}</span>` : 'Linha Disponível');
+                }else{
+                    var html = `
+                    <div class="col-md-4 rtItem ${item['info'].ringStatus == true ? 'ringing' : ''}" id="rtItem_${item.id}">
+                        <div class="col-md-12 rtiCard">
+                            <div class="row">
+                                <div class="col-md-4"><img src="assets/images/default-profile.png" alt="Imagem de Perfil" title="Image de Perfil" class="img-responsive thumbnail rounded-circle" style="width: 100%; height: auto"></div>
+                                <div class="col-md-8">
+                                    <span class="rtiName">${item.name}</span><br/>
+                                    <strong>Ramal:</strong> <span class="rtiRamal">${item.ramal}</span><br/>
+                                    <strong>Status:</strong> <span class="rtiStatus">${item['info'].status}<br/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row flex-nowrap realtimeItemOptions" style="overflow-x: hidden; background-color: #4f8998; margin-top: 15px; line-height: 35px; color: white">
-                            <div class="col-md-6">
-                                <i class="fas fa-phone-square"></i> Linha Disponível
-                            </div>
-                            <div class="col-md-4">
-                                <i class="fas fa-clock"></i> 00:00
-                            </div>
-                            <div class="col-md-2">
-                                <button class="hiddenButton itemOptionsShow" style="color: white" data-popover="true" data-trigger="hover" data-title="Ver opções" data-content="Ver mais opções de acompanhamento em realtime">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                            <div class="col-md-12">
-                                <button class="hiddenButton itemOptionsHide" style="color: white" data-popover="true" data-trigger="hover" data-title="Fechar Opções" data-content="Fechar opções de acompanhamento em realtime">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
+                            <div class="row flex-nowrap realtimeItemOptions">
+                                <div class="col-md-6">
+                                    <i class="fas fa-phone-square"></i> <span class="rtiCallStatus">${item['info'].callStatus == true ? `<span class="phone">${item['info'].number}</span>` : 'Linha Disponível'}</spa>
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="fas fa-clock"></i> <span class="rtiTime">00:00</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="hiddenButton itemOptionsShow" style="color: white" data-popover="true" data-placement="left" data-trigger="hover" data-title="Ver opções" data-content="Ver mais opções de acompanhamento em realtime">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="hiddenButton itemOptionsHide" style="color: white" data-popover="true" data-trigger="hover" data-placement="right" data-title="Fechar Opções" data-content="Fechar opções de acompanhamento em realtime">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-10">
+                                    Lista de opções
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                `;
+                    `;
+                    $('#realTimeList').append(html);
+                }
             })
-            $('#realTimeList').html(html);
 
             // Realtime item options
             $('.itemOptionsShow').on('click', function(event){
                 var width = $('.realtimeItemOptions').width()
-                $(this).closest('.realtimeItemOptions').animate({scrollLeft: width});
+                $(this).closest('.realtimeItemOptions').stop().animate({scrollLeft: width});
             })
+
             $('.itemOptionsHide').on('click', function(event){
-                $(this).closest('.realtimeItemOptions').animate({scrollLeft: 0});
+                $(this).closest('.realtimeItemOptions').stop().animate({scrollLeft: 0});
             })
+
+
+            $('.phone').unmask().mask(SPMaskBehavior, spOptions);
         },
         error: (response) => {
             return console.error('[realTimeItems]:', response)
         }
     })
+    $('.ringing').shake(3,5,800);
 }
 </script>

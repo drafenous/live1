@@ -362,3 +362,21 @@ table.dataTable tbody td {
 }
 
 /* dashboard adjustments */
+
+/* realtime itens */
+.rtItem{
+    margin: 15px 0px !important;
+}
+
+.rtiCard{
+    background-color: #ecf0f1;
+    padding: 15px 15px 0px 15px !important;
+}
+
+.realtimeItemOptions{
+    overflow-x: hidden;
+    background-color: #4f8998;
+    margin-top: 15px !important;
+    line-height: 35px !important;
+    color: white
+}

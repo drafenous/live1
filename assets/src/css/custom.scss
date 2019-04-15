@@ -8,7 +8,8 @@ $theme-colors: (
   light: #ecf0f1,
   dark: #2c3e50,
   green: #218c74,
-  white: #ffffff
+  white: #ffffff,
+  darkGrey: #bdc3c7
 );
 
 $enable-rounded: false;
@@ -75,6 +76,12 @@ $border-radius-small: 0px;
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
     border-radius: 0px !important; 
+}
+
+// Progress
+.progress{
+    background-color: #bdc3c7 !important;
+    border-radius: 0px;
 }
 
 $custom-file-text: (
