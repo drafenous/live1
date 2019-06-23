@@ -1,22 +1,11 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-    <!-- Sticky Footer -->
-    <div class="push"></div>
-</div>
-<footer class="footer text-center">
-    &copy 2019 - Advance Telecom<br/>
-    Todos os direitos reservados.
-</footer>
-
 </body>
 
 <!-- JS -->
 <script src="<?= base_url('node_modules\jquery-ui-dist\jquery-ui.min.js'); ?>"></script>
 <script src="<?= base_url('node_modules\bs-custom-file-input\dist\bs-custom-file-input.min.js'); ?>"></script>
-
-<!-- chartJS -->
-<script src="<?= base_url('node_modules/chart.js/dist/Chart.min.js'); ?>"></script>
 
 <!-- datatables -->
 <script src="<?= base_url('node_modules\datatables.net\js\jquery.dataTables.min.js'); ?>"></script>
